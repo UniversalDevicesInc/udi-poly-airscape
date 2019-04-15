@@ -10,7 +10,7 @@ class Controller(polyinterface.Controller):
     def __init__(self, polyglot):
         super(Controller, self).__init__(polyglot)
         self.name = 'Airscape Controller'
-        self.poly.onConfig(self.process_config)
+        #self.poly.onConfig(self.process_config)
 
     def start(self):
         LOGGER.info('Started Airscape NodeServer')
