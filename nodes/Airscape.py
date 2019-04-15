@@ -7,7 +7,7 @@ LOGGER = polyinterface.LOGGER
 class Airscape(polyinterface.Node):
 
     def __init__(self, controller, primary, address, name):
-        super(AirscapeNode, self).__init__(controller, primary, address, name)
+        super(Airscape, self).__init__(controller, primary, address, name)
 
     def start(self):
         self.setDriver('ST', 1)
