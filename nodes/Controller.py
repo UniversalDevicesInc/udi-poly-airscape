@@ -14,7 +14,7 @@ class Controller(polyinterface.Controller):
     def start(self):
         LOGGER.info('Started Airscape NodeServer')
         self.check_params()
-        self.discover()
+        self.discover("")
         self.update_profile("")
 
     def shortPoll(self):
