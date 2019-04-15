@@ -79,7 +79,8 @@ class Controller(polyinterface.Controller):
                 ]
             },
         ]
-
+        self.poly.save_typed_params(params)
+        
         # Remove all existing notices
         self.removeNoticesAll()
         # Add a notice if they need to change the user/password from the default.
