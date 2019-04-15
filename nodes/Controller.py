@@ -31,6 +31,7 @@ class Controller(polyinterface.Controller):
     def discover(self, command):
         if self.airscape2 is None or len(self.airscape2) == 0:
             self.l_info('discover','No Airscape 2 Entries in config: {}'.format(self.airscape2))
+            return
         for a2 in self.airscape2:
             self.addNode(Airscape(self, self.address, get_valid_node_name(a2['name']), 'Airscape Node {}'.format(a2['name']), a2))
 
@@ -89,12 +90,10 @@ class Controller(polyinterface.Controller):
     def remove_notice_config(self,command):
         self.removeNotice('config')
 
-
     def update_profile(self,command):
         LOGGER.info('update_profile:')
         st = self.poly.installprofile()
         return st
-
 
     def l_info(self, name, string):
         LOGGER.info("%s:%s: %s" %  (self.id,name,string))
