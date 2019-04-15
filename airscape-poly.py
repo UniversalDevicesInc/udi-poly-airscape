@@ -14,7 +14,6 @@ class Controller(polyinterface.Controller):
 
     def start(self):
         LOGGER.info('Started Airscape NodeServer')
-        self.addNotice({'hello': 'Hello Friends!'})
         self.check_params()
         self.discover()
         self.poly.add_custom_config_docs("<b>And this is some custom config data</b>")
