@@ -17,7 +17,8 @@ class Controller(polyinterface.Controller):
         self.check_params()
         self.discover()
         self.poly.add_custom_config_docs("<b>And this is some custom config data</b>")
-
+        self.update_profile()
+        
     def shortPoll(self):
         pass
 
