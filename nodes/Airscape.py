@@ -37,7 +37,7 @@ class Airscape(polyinterface.Node):
         LOGGER.debug("%s:%s: %s" % (self.id,name,string))
 
     drivers = [
-        {'driver': 'ST', 'value': 0, 'uom': 2}
+        {'driver': 'ST',  'value': 0, 'uom': 2 },
         {'driver': 'GV1', 'value': 0, 'uom': 56}
     ]
     id = 'airscape'
