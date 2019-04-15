@@ -7,6 +7,6 @@ ST-ctl-ST-NAME = NodeServer Online
 
 # mynodetype
 ND-airscape-NAME = Airscape Node
-ST-airscape-ST-NAME = Online
-ST-airscape-GV1-NAME = Speed
-CMD-airscape-GV1-NAME = Set Speed
+ST-airs-ST-NAME = Online
+ST-airs-GV1-NAME = Speed
+CMD-airs-SET_SPEED-NAME = Set Speed
