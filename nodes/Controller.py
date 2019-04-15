@@ -1,6 +1,7 @@
 
 import polyinterface
 from nodes import Airscape
+from node_funcs import *
 
 LOGGER = polyinterface.LOGGER
 
@@ -14,7 +15,6 @@ class Controller(polyinterface.Controller):
         LOGGER.info('Started Airscape NodeServer')
         self.check_params()
         self.discover()
-        self.poly.add_custom_config_docs("<b>And this is some custom config data</b>")
         self.update_profile("")
 
     def shortPoll(self):
@@ -28,8 +28,11 @@ class Controller(polyinterface.Controller):
         for node in self.nodes:
             self.nodes[node].reportDrivers()
 
-    def discover(self, *args, **kwargs):
-        self.addNode(Airscape(self, self.address, 'airscapeaddr', 'Airscape Node Name'))
+    def discover(self, command):
+        if self.airscape2 is None or len(self.airscape2) == 0:
+            self.l_info('discover','No Airscape 2 Entries in config: {}'.format(self.airscape2))
+        for a2 in slef.airscape2:
+            self.addNode(Airscape(self, self.address, get_valid_node_name(a2['name']), 'Airscape Node {}'.format(a2['name']), a2))
 
     def delete(self):
         LOGGER.info('Oh God I\'m being deleted. Nooooooooooooooooooooooooooooooooooooooooo.')
@@ -37,35 +40,51 @@ class Controller(polyinterface.Controller):
     def stop(self):
         LOGGER.debug('NodeServer stopped.')
 
+    def setDriver(self,driver,value):
+        self.driver[driver] = value
+        super(Controller, self).setDriver(driver,value)
+
+    def getDriver(self,driver):
+        if driver in self.driver:
+            return self.driver[driver]
+        else:
+            return super(Controller, self).getDriver(driver)
+
+    def get_typed_name(self,name):
+        typedConfig = self.polyConfig.get('typedCustomData')
+        if not typedConfig:
+            return None
+        return typedConfig.get(name)
+
     def check_params(self):
-        """
-        This is an example if using custom Params for user and password and an example with a Dictionary
-        """
-        default_user = "YourUserName"
-        default_password = "YourPassword"
-        if 'user' in self.polyConfig['customParams']:
-            self.user = self.polyConfig['customParams']['user']
-        else:
-            self.user = default_user
-            LOGGER.error('check_params: user not defined in customParams, please add it.  Using {}'.format(self.user))
-            st = False
 
-        if 'password' in self.polyConfig['customParams']:
-            self.password = self.polyConfig['customParams']['password']
-        else:
-            self.password = default_password
-            LOGGER.error('check_params: password not defined in customParams, please add it.  Using {}'.format(self.password))
-            st = False
-
-        # Make sure they are in the params
-        self.addCustomParam({'password': self.password, 'user': self.user, 'some_example': '{ "type": "TheType", "host": "host_or_IP", "port": "port_number" }'})
+        params = [
+            {
+                'name': 'airscape2',
+                'title': 'Airscape 2',
+                'desc': 'Airscape 2nd Generation Controller',
+                'isList': True,
+                'params': [
+                    {
+                        'name': 'name',
+                        'title': "Name",
+                        'isRequired': True,
+                    },
+                    {
+                        'name': 'host',
+                        'title': 'Host Name or IP Address',
+                        'isRequired': True
+                    },
+                ]
+            },
+        ]
 
         # Remove all existing notices
         self.removeNoticesAll()
         # Add a notice if they need to change the user/password from the default.
-        if self.user == default_user or self.password == default_password:
-            # This doesn't pass a key to test the old way.
-            self.addNotice('Please set proper user and password in configuration page, and restart this nodeserver','config')
+        self.airscape2 = self.get_typed_name('airscape2')
+        if self.airscape2 is None or len(self.airscape2) == 0:
+            self.addNotice('Please add a Airscape 2 Fan in the configuration page','config')
 
     def remove_notice_config(self,command):
         self.removeNotice('config')
@@ -75,6 +94,19 @@ class Controller(polyinterface.Controller):
         LOGGER.info('update_profile:')
         st = self.poly.installprofile()
         return st
+
+
+    def l_info(self, name, string):
+        LOGGER.info("%s:%s: %s" %  (self.id,name,string))
+
+    def l_error(self, name, string):
+        LOGGER.error("%s:%s: %s" % (self.id,name,string))
+
+    def l_warning(self, name, string):
+        LOGGER.warning("%s:%s: %s" % (self.id,name,string))
+
+    def l_debug(self, name, string):
+        LOGGER.debug("%s:%s: %s" % (self.id,name,string))
 
     id = 'controller'
     commands = {
