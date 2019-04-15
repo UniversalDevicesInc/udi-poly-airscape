@@ -36,7 +36,10 @@ class Airscape(polyinterface.Node):
     def l_debug(self, name, string):
         LOGGER.debug("%s:%s: %s" % (self.id,name,string))
 
-    drivers = [{'driver': 'ST', 'value': 0, 'uom': 2}]
+    drivers = [
+        {'driver': 'ST', 'value': 0, 'uom': 2}
+        {'driver': 'GV1', 'value': 0, 'uom': 56}
+    ]
     id = 'airscape'
     commands = {
         'DON': setOn,

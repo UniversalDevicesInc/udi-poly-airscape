@@ -80,10 +80,10 @@ class Controller(polyinterface.Controller):
             },
         ]
         self.poly.save_typed_params(params)
-        
+
         # Remove all existing notices
         self.removeNoticesAll()
-        # Add a notice if they need to change the user/password from the default.
+
         self.airscape2 = self.get_typed_name('airscape2')
         if self.airscape2 is None or len(self.airscape2) == 0:
             self.addNotice('Please add a Airscape 2 Fan in the configuration page','config')
