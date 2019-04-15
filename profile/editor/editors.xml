@@ -3,4 +3,7 @@
     <editor id="bool">
         <range uom="2" subset="0,1" />
     </editor>
-</editors>
+    <editor id="SPEED">
+        <range uom="56" subset="0-9" />
+    </editor>
+  </editors>

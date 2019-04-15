@@ -11,23 +11,25 @@
             <accepts>
               <cmd id="QUERY" />
               <cmd id="DISCOVER" />
-              <cmd id="REMOVE_NOTICES_ALL" />
-              <cmd id="REMOVE_NOTICE_TEST" />
               <cmd id="UPDATE_PROFILE" />
             </accepts>
         </cmds>
     </nodeDef>
-	<!-- templatenodeid -->
-    <nodeDef id="templatenodeid" nls="tmplnode">
+	<!-- airscape node -->
+    <nodeDef id="airscape" nls="airs">
         <editors />
         <sts>
-            <st id="ST" editor="bool" />
+            <st id="ST"  editor="bool"  />
+            <st id="GV1" editor="SPEED" />
         </sts>
         <cmds>
             <sends />
             <accepts>
                 <cmd id="DON" />
                 <cmd id="DOF" />
+                <cmd id="SET_SPEED"/>
+                  <p id="" editor="SPEED" init="GV1" />
+                </cmd>
             </accepts>
         </cmds>
     </nodeDef>

@@ -1,22 +1,22 @@
 {
-    "name": "PythonTemplate",
-    "docs": "https://github.com/Einstein42/udi-poly-template-python",
+    "name": "Airscape",
+    "docs": "https://github.com/jimboca/udi-poly-airscape",
     "type": "python3",
-    "executable": "template-poly.py",
+    "executable": "airscape-poly.py",
     "install": "install.sh",
     "install_cloud": "install_cloud.sh",
-    "description": "Template Node Server",
+    "description": "Airscape Node Server",
     "notice": "Your disclaimer here",
-    "shortPoll": "120",
-    "longPoll": "240",
+    "shortPoll": "60",
+    "longPoll": "600",
     "credits": [
         {
-            "title": "mypoly: a NodeServer for Template Integration",
-            "author": "James Milne (Einstein.42)",
-            "version": "2.0.5",
-            "date": "November 8, 2017",
-            "source": "https://github.com/Einstein42/udi-poly-template-python",
-            "license": "https://raw.githubusercontent.com/Einstein42/udi-poly-template-python/master/LICENSE"
+            "title": "airscape: A NodeServer for Airscape Fan Integration",
+            "author": "JimBoCA",
+            "version": "2.0.0",
+            "date": "April 15, 2019",
+            "source": "https://github.com/jimboca/udi-poly-airscape",
+            "license": "https://raw.githubusercontent.com/jimboca/udi-poly-airscape/master/LICENSE"
         }
     ]
 }
