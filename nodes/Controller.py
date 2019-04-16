@@ -1,5 +1,6 @@
 
 import polyinterface
+import logging
 from nodes import Airscape2
 from node_funcs import *
 
