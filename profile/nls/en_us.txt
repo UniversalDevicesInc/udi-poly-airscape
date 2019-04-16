@@ -16,7 +16,7 @@ CDM-40 = Error
 CDM-50 = Critical
 
 # Airscape 2 Nodes
-ND-airscape2-NAME = Airscape2 Attic Fan (F)
+ND-airscape2_F-NAME = Airscape2 Attic Fan (F)
 
 ST-as2-ST-NAME = Speed
 ST-as2-CLITEMP-NAME = Attic Temperature
