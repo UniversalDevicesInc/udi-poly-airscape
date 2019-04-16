@@ -7,6 +7,14 @@ CMD-ctl-DEBUG-NAME = Set Debug Level
 ST-ctl-ST-NAME = NodeServer Online
 ST-ctl-GV1-NAME = Debug Level
 
+CDM-8 = Debug + Session Verbose
+CDM-9 = Debug + Session
+CDM-10 = Debug
+CDM-20 = Info
+CDM-30 = Warning
+CDM-40 = Error
+CDM-50 = Critical
+
 # Airscape 2 Nodes
 ND-airscape2-NAME = Airscape2 Attic Fan (F)
 
