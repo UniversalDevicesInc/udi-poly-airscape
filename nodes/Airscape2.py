@@ -115,7 +115,7 @@ class Airscape2(polyinterface.Node):
         {'driver': 'GV5', 'value': 0, 'uom': 17}, # oa_temp
 
     ]
-    id = 'airscape2'
+    id = 'airscape2_F'
     commands = {
         'FDUP': speedUp,
         'FDDOWN': speedDown,
