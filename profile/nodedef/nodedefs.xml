@@ -46,15 +46,20 @@
           <st id="GV5" editor="I_TEMP_F" />
         </sts>
         <cmds>
-            <sends />
-            <accepts>
-              <cmd id="FDDOWN" />
-              <cmd id="FDUP" />
-              <cmd id="DOF" />
-              <cmd id="SET_SPEED">
-                <p id="" editor="SPEED" init="ST" />
-              </cmd>
-            </accepts>
+          <sends>
+            <cmd id="DON" />
+            <cmd id="DOF" />
+            <cmd id="FDDOWN" />
+            <cmd id="FDUP" />
+          </sends>
+          <accepts>
+            <cmd id="FDDOWN" />
+            <cmd id="FDUP" />
+            <cmd id="DOF" />
+            <cmd id="SET_SPEED">
+              <p id="" editor="SPEED" init="ST" />
+            </cmd>
+          </accepts>
         </cmds>
     </nodeDef>
 </nodeDefs>

@@ -5,10 +5,10 @@ CMD-ctl-DISCOVER-NAME = Discover
 CMD-ctl-UPDATE_PROFILE-NAME = Update Profile
 CMD-ctl-DEBUG-NAME = Set Debug Level
 ST-ctl-ST-NAME = NodeServer Online
-ST-ctl-GV-NAME = Debug Level
+ST-ctl-GV1-NAME = Debug Level
 
 # Airscape 2 Nodes
-ND-airscape2-NAME = Airscape2 Node
+ND-airscape2-NAME = Airscape2 Attic Fan (F)
 
 ST-as2-ST-NAME = Speed
 ST-as2-CLITEMP-NAME = Attic Temperature
