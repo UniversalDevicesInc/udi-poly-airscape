@@ -16,11 +16,11 @@
         </cmds>
     </nodeDef>
 	<!-- airscape node -->
-    <nodeDef id="airscape" nls="airs">
+    <nodeDef id="airscape2" nls="as2">
         <editors />
         <sts>
-            <st id="ST"  editor="bool"  />
-            <st id="GV1" editor="SPEED" />
+            <st id="GV1"  editor="bool"  />
+            <st id="ST" editor="SPEED" />
         </sts>
         <cmds>
             <sends />
@@ -28,7 +28,7 @@
                 <cmd id="DON" />
                 <cmd id="DOF" />
                 <cmd id="SET_SPEED">
-                  <p id="" editor="SPEED" init="GV1" />
+                  <p id="" editor="SPEED" init="ST" />
                 </cmd>
             </accepts>
         </cmds>

@@ -1,6 +1,6 @@
 
 import polyinterface
-from nodes import Airscape
+from nodes import Airscape2
 from node_funcs import *
 
 LOGGER = polyinterface.LOGGER
@@ -33,23 +33,13 @@ class Controller(polyinterface.Controller):
             self.l_info('discover','No Airscape 2 Entries in config: {}'.format(self.airscape2))
             return
         for a2 in self.airscape2:
-            self.addNode(Airscape(self, self.address, get_valid_node_name(a2['name']), 'Airscape Node {}'.format(a2['name']), a2))
+            self.addNode(Airscape2(self, self.address, get_valid_node_name(a2['name']), 'Airscape Node {}'.format(a2['name']), a2))
 
     def delete(self):
         LOGGER.info('Oh God I\'m being deleted. Nooooooooooooooooooooooooooooooooooooooooo.')
 
     def stop(self):
         LOGGER.debug('NodeServer stopped.')
-
-    def setDriver(self,driver,value):
-        self.driver[driver] = value
-        super(Controller, self).setDriver(driver,value)
-
-    def getDriver(self,driver):
-        if driver in self.driver:
-            return self.driver[driver]
-        else:
-            return super(Controller, self).getDriver(driver)
 
     def get_typed_name(self,name):
         typedConfig = self.polyConfig.get('typedCustomData')

@@ -5,8 +5,8 @@ CMD-ctl-DISCOVER-NAME = Discover
 CMD-ctl-UPDATE_PROFILE-NAME = Update Profile
 ST-ctl-ST-NAME = NodeServer Online
 
-# mynodetype
-ND-airscape-NAME = Airscape Node
-ST-airs-ST-NAME = Online
-ST-airs-GV1-NAME = Speed
-CMD-airs-SET_SPEED-NAME = Set Speed
+# Airscape 2 Nodes
+ND-airscape2-NAME = Airscape2 Node
+ST-as2-ST-NAME = Speed
+ST-as2-GV1-NAME = Online
+CMD-as2-SET_SPEED-NAME = Set Speed
