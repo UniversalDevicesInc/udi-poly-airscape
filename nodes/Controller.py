@@ -35,7 +35,7 @@ class Controller(polyinterface.Controller):
             self.l_info('discover','No Airscape 2 Entries in config: {}'.format(self.airscape2))
             return
         for a2 in self.airscape2:
-            self.addNode(Airscape2(self, self.address, get_valid_node_name(a2['name']), 'Airscape Node {}'.format(a2['name']), a2))
+            self.addNode(Airscape2(self, self.address, get_valid_node_name(a2['name']), 'Airscape {}'.format(a2['name']), a2))
 
     def delete(self):
         LOGGER.info('Oh God I\'m being deleted. Nooooooooooooooooooooooooooooooooooooooooo.')
