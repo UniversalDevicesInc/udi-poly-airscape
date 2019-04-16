@@ -2,7 +2,12 @@
 
 #
 # Airscape API Doc:  https://blog.airscapefans.com/archives/gen-2-controls-api
-
+#
+# TODO:
+# - Parse weird xml data from fanspd.cgi
+# - If doorinprocess then tight loop to watch when speed increases or decreases?
+#
+#
 import polyinterface
 from pgSession import pgSession
 
@@ -55,21 +60,36 @@ class Airscape2(polyinterface.Node):
         else:
             return super(Airscape2, self).getDriver(driver)
 
-    def speedDown(self, command):
+    def setOff(self, command):
         # The data returned by fanspd is not good xml, so ignore it.
         res = self.session.get('fanspd.cgi',{'dir': 4},parse=False)
         self.l_debug('query',"Got: {}".format(res))
-        cst = int(self.getDriver("ST"))
-        if cst > 0:
-            self.setDriver("ST",cst-1)
+        if res is not False and res['code'] == 200:
+            self.setDriver("ST",0)
+
+    def speedDown(self, command):
+        # The data returned by fanspd is not good xml, so ignore it.
+        res = self.session.get('fanspd.cgi',{'dir': 3},parse=False)
+        self.l_debug('query',"Got: {}".format(res))
+        if res is not False and res['code'] == 200:
+            cst = int(self.getDriver("ST"))
+            if cst > 0:
+                self.setDriver("ST",cst-1)
 
     def speedUp(self, command):
         # The data returned by fanspd is not good xml, so ignore it.
         res = self.session.get('fanspd.cgi',{'dir': 1},parse=False)
         self.l_debug('query',"Got: {}".format(res))
-        cst = int(self.getDriver("ST"))
-        if cst < 8:
-            self.setDriver("ST",cst+1)
+        if res is not False and res['code'] == 200:
+            cst = int(self.getDriver("ST"))
+            if cst < 8:
+                self.setDriver("ST",cst+1)
+
+    def addHour(self, command):
+        # The data returned by fanspd is not good xml, so ignore it.
+        res = self.session.get('fanspd.cgi',{'dir': 2},parse=False)
+        self.l_debug('query',"Got: {}".format(res))
+
 
     def l_info(self, name, string):
         LOGGER.info("%s:%s: %s" %  (self.id,name,string))
@@ -84,13 +104,21 @@ class Airscape2(polyinterface.Node):
         LOGGER.debug("%s:%s: %s" % (self.id,name,string))
 
     drivers = [
-        {'driver': 'ST',  'value': 0, 'uom': 56},
-        {'driver': 'GV1', 'value': 1, 'uom': 2}
+        {'driver': 'ST',  'value': 0, 'uom': 56}, # speed
+        {'driver': 'CLITEMP', 'value': 0, 'uom': 17}, # attic_temp
+        {'driver': 'TIMEREM', 'value': 0, 'uom': 20}, # hours
+        {'driver': 'CPW', 'value': 0, 'uom': 73}, # watt?
+        {'driver': 'GV1', 'value': 0, 'uom': 2}, # Online
+        {'driver': 'GV2', 'value': 0, 'uom': 2}, # doorinprocess
+        {'driver': 'GV3', 'value': 0, 'uom': 7}, # cfm
+        {'driver': 'GV4', 'value': 0, 'uom': 17}, # house_temp
+        {'driver': 'GV5', 'value': 0, 'uom': 17}, # oa_temp
+
     ]
     id = 'airscape2'
     commands = {
-        'FADEUP': speedUp,
-        'FADEDOWN': speedDown,
-        'DON': speedUp,
-        'DOF': speedDown
+        'FDUP': speedUp,
+        'FDDOWN': speedDown,
+        'DOF': setOff,
+        'ADD_HOUR': addHour,
     }

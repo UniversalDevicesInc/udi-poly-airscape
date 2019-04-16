@@ -13,6 +13,7 @@ class Controller(polyinterface.Controller):
 
     def start(self):
         LOGGER.info('Started Airscape NodeServer')
+        self.set_debug_mode()
         self.check_params()
         self.discover("")
         self.update_profile("")
@@ -85,6 +86,48 @@ class Controller(polyinterface.Controller):
         LOGGER.info('update_profile:')
         st = self.poly.installprofile()
         return st
+
+    def set_all_logs(self,level):
+        self.l_info("set_all_logs",level)
+        LOGGER.setLevel(level)
+        #logging.getLogger('requests').setLevel(level)
+        #logging.getLogger('urllib3').setLevel(level)
+
+    def set_debug_mode(self,level=None):
+        self.l_info("set_debug_mode",level)
+        mdrv = 'GV1'
+        if level is None:
+            try:
+                level = self.getDriver(mdrv)
+            except:
+                self.l_error('set_debug_mode','getDriver(GV2) failed',True)
+            if level is None:
+                level = 30
+        level = int(level)
+        self.debug_mode = level
+        try:
+            self.setDriver(mdrv, level)
+        except:
+            self.l_error('set_debug_mode','setDriver(GV2) failed',True)
+        self.debug_level = 0
+        if level < 20:
+            self.set_all_logs(logging.DEBUG)
+            # 9 & 8 incrase pgsession debug level
+            if level == 9:
+                self.debug_level = 1
+            elif level == 8:
+                self.debug_level = 2
+        elif level <= 20:
+            self.set_all_logs(logging.INFO)
+        elif level <= 30:
+            self.set_all_logs(logging.WARNING)
+        elif level <= 40:
+            self.set_all_logs(logging.ERROR)
+        elif level <= 50:
+            self.set_all_logs(logging.CRITICAL)
+        else:
+            self.l_error("set_debug_mode","Unknown level {0}".format(level))
+        self.l_info("set_debug_mode"," session debug_level={}".format(self.debug_level))
 
     def l_info(self, name, string):
         LOGGER.info("%s:%s: %s" %  (self.id,name,string))

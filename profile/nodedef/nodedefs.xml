@@ -1,35 +1,59 @@
 <nodeDefs>
     <!-- NODE DEF from 5.0 document http://wiki.universal-devices.com/index.php?title=V50_MAIN -->
     <!-- controller, this must mach the id in your Controller class-->
-    <nodeDef id="controller" nls="ctl">
-        <editors />
-        <sts>
+  <nodeDef id="controller" nls="ctl">
+    <editors />
+    <sts>
 			<st id="ST" editor="bool" />
-		</sts>
-        <cmds>
-            <sends />
-            <accepts>
-              <cmd id="QUERY" />
-              <cmd id="DISCOVER" />
-              <cmd id="UPDATE_PROFILE" />
-            </accepts>
-        </cmds>
-    </nodeDef>
+      <st id="GV1" editor="I_DEBUG" />
+  	</sts>
+    <cmds>
+      <sends>
+        <cmd id="DON" />
+        <cmd id="DOF" />
+      </sends>
+      <accepts>
+        <cmd id="QUERY" />
+        <cmd id="DISCOVER" />
+        <cmd id="UPDATE_PROFILE" />
+        <cmd id="DEBUG">
+         <p id="" editor="I_DEBUG" init="GV1" />
+       </cmd>
+      </accepts>
+    </cmds>
+</nodeDef>
 	<!-- airscape node -->
-    <nodeDef id="airscape2" nls="as2">
+    <nodeDef id="airscape2_F" nls="as2">
         <editors />
         <sts>
-            <st id="GV1"  editor="bool"  />
-            <st id="ST" editor="SPEED" />
+          <!-- Online -->
+          <st id="GV1"  editor="bool"  />
+          <!-- Speed -->
+          <st id="ST" editor="SPEED" />
+          <!-- attic_temp -->
+          <st id="CLITEMP" editor="I_TEMP_F" />
+          <!-- doorinprocess  -->
+          <st id="GV2" editor="bool" />
+          <!-- timeremaining -->
+          <st id="TIMEREM" editor="TIMEREM" />
+          <!-- cfm -->
+          <st id="GV3" editor="CFM" />
+          <!-- power -->
+          <st id="CPW" editor="CPW" />
+          <!-- house_temp -->
+          <st id="GV4" editor="I_TEMP_F" />
+          <!-- oa_temp -->
+          <st id="GV5" editor="I_TEMP_F" />
         </sts>
         <cmds>
             <sends />
             <accepts>
-                <cmd id="DON" />
-                <cmd id="DOF" />
-                <cmd id="SET_SPEED">
-                  <p id="" editor="SPEED" init="ST" />
-                </cmd>
+              <cmd id="FDDOWN" />
+              <cmd id="FDUP" />
+              <cmd id="DOF" />
+              <cmd id="SET_SPEED">
+                <p id="" editor="SPEED" init="ST" />
+              </cmd>
             </accepts>
         </cmds>
     </nodeDef>

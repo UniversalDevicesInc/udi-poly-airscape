@@ -7,6 +7,17 @@ ST-ctl-ST-NAME = NodeServer Online
 
 # Airscape 2 Nodes
 ND-airscape2-NAME = Airscape2 Node
+
 ST-as2-ST-NAME = Speed
+ST-as2-CLITEMP-NAME = Attic Temperature
+ST-as2-TIMEREM-NAME = Timer Remaining
+ST-as2-CPW-NAME = Current Power
 ST-as2-GV1-NAME = Online
+ST-as2-GV2-NAME = Door Moving
+ST-as2-GV3-NAME = CFM
+ST-as2-GV4-NAME = House Temperature
+ST-as2-GV5-NAME = Outside Temperature
+
 CMD-as2-SET_SPEED-NAME = Set Speed
+CMD-as2-FDUP-NAME = Speed Up
+CMD-as2-FDDOWN-NAME = Speed Down
