@@ -88,9 +88,11 @@ class Airscape2(polyinterface.Node):
         return False
 
     def watch_door(self):
-        if int(self.status['doorinprocess']) == 1:
+        while int(self.status['doorinprocess']) == 1:
+            self.l_debug('watch_door', 'st={}'.format(self.status['doorinprocess']))
             time.sleep(1)
             self.poll(check_door=False)
+        self.l_debug('watch_door', 'st={}'.format(self.status['doorinprocess']))
 
     def query(self):
         self.poll()
