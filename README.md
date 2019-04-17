@@ -1,6 +1,6 @@
 # Airscape NodeServer
 
-This is a Polyglot V2 Nodeserver for the ISY 994i to control [Airscape Whold House Fans](https://airscapefans.com/) using the [Gen 2 Controls API](https://blog.airscapefans.com/archives/gen-2-controls-api).  If you don't already own one of these awesome fans, you have can not purchase the Gen 2 controller online, you have to call them.
+This is a Polyglot V2 Nodeserver for the ISY 994i to control [Airscape Whold House Fans](https://airscapefans.com/) using the [Gen 2 Controls API](https://blog.airscapefans.com/archives/gen-2-controls-api).  If you don't already own one of these awesome fans, you can not purchase the Gen 2 controller online, you have to call them.
 
 ## Installation
 
