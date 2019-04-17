@@ -79,7 +79,7 @@ class pgSession():
                 rtxt = remove_control_characters(response.text)
                 rdata = json.loads(rtxt)
             except (Exception) as err:
-                self.l_error(fname,'Failed to convert xml {0}: {1}'.format(rtxt,err), exc_info=True)
+                self.l_error(fname,'Failed to convert json {0}: {1}'.format(rtxt,err), exc_info=True)
                 rdata = False
         elif parse == "axml":
             # Weird xml from airscape

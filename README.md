@@ -8,6 +8,8 @@ When you Fan is off and you turn it on by increasing the speed then the nodeserv
 
 For all other status changes for Speed Down, Speed Up, or Off, you will see the ISY status change right away since the Fan API returns the proper status on each command.
 
+By default the 'Debug Level' on the Controller is set to Debug.  Please leave it this way until you feel the Nodeserver is stable, then change it to Warning which will log much less data to your machine.
+
 ## Installation
 
 - Download from the Nodeservers -> Nodeserver Store
