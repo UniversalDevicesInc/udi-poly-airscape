@@ -80,7 +80,7 @@ class Airscape2(polyinterface.Node):
                 self.status['cfm'] = rdata['cfm']
                 self.setDriver('GV3', self.status["cfm"])
             if 'house_temp' in rdata:
-                self.status['house_temp'] = rdata['hose_temp']
+                self.status['house_temp'] = rdata['house_temp']
                 self.setDriver('GV4', self.status["house_temp"])
             if 'oa_temp' in rdata:
                 self.status['oa_temp'] = rdata['oa_temp']
