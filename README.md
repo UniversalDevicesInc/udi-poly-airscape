@@ -2,6 +2,12 @@
 
 This is a Polyglot V2 Nodeserver for the ISY 994i to control [Airscape Whold House Fans](https://airscapefans.com/) using the [Gen 2 Controls API](https://blog.airscapefans.com/archives/gen-2-controls-api).  If you don't already own one of these awesome fans, you can not purchase the Gen 2 controller online, you have to call them.
 
+## Information
+
+When you Fan is off and you turn it on by increasing the speed then the nodeserver will watch the status by polling the fan every second to see when the door is done moving and the fan actually turns on.  This way you get immediate feedback because the 'Door Moving' will immediately be set to True, then when the fan actually turns on it will set the speed.
+
+For all other status changes for Speed Down, Speed Up, or Off, you will see the ISY status change right away since the Fan API returns the proper status on each command.
+
 ## Installation
 
 - Download from the Nodeservers -> Nodeserver Store
@@ -17,10 +23,10 @@ This is a Polyglot V2 Nodeserver for the ISY 994i to control [Airscape Whold Hou
 
 - Can't use the Airscape 2 node in programs, I know that's a big deal, but wanted to get the initial release out
 - Currently 'Set Speed' doesn't work, only 'Speed Up' and 'Speed Down'
-- When Speed Up/Speed Down are pressed, and the command is succesfully passed to the fan, the nodeserver assumes the speed is set.  In the future it will pull back the status immediatly from the fan, but this isn't simple because the fan doesn't go from 0 -> 1 right away if you have doors it waits for the doors to open enough before the fan speed changes.  If a shortPoll interval queries the fan before it goes from 0 -> 1 then it will go back to zero, but the next query will update it again.
-- Need to monitor doormotion param and query in a tighter loop until it's done.
 
 ## Release Notes
 
+- 2.0.1:
+  - When doorinprocess it watches the status in a tight loop.
 - 2.0.0:
   - Initial Release

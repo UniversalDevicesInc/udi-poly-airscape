@@ -22,6 +22,7 @@ class Airscape2(polyinterface.Node):
         self.config_data = config_data
         self.debug_level = 1
         self.do_poll = False # Don't let shortPoll happen during initialiation
+        self.watching_door = False
 
     def start(self):
         self.driver = {}
@@ -36,17 +37,17 @@ class Airscape2(polyinterface.Node):
     def shortPoll(self):
         #if 'doorinprocess' in self.status and int(self.status['doorinprocess']) == 1:
         self.l_debug('shortPoll', '...')
-        self.poll()
+        if not self.watching_door:
+            self.poll()
 
     def longPoll(self):
-        self.l_debug('longPoll', '...')
-        self.poll()
+        pass
 
-    def poll(self,check_door=True):
+    def poll(self):
         res = self.session.get('status.json.cgi',{},parse="json")
-        self.set_from_response(res,check_door=check_door)
+        self.set_from_response(res)
 
-    def set_from_response(self,res,check_door=True):
+    def set_from_response(self,res):
         self.l_debug('set_from_response',"Got: {}".format(res))
         self.st = self.check_response(res)
         self.setDriver('GV1',1 if self.st else 0)
@@ -76,7 +77,7 @@ class Airscape2(polyinterface.Node):
                 self.setDriver('GV4', self.status["house_temp"])
             if 'oa_temp' in self.status:
                 self.setDriver('GV5', self.status["oa_temp"])
-            if check_door:
+            if not self.watching_door:
                 self.watch_door()
 
     def check_response(self,res):
@@ -89,9 +90,11 @@ class Airscape2(polyinterface.Node):
 
     def watch_door(self):
         while int(self.status['doorinprocess']) == 1:
+            self.watching_door = True
             self.l_debug('watch_door', 'st={}'.format(self.status['doorinprocess']))
             time.sleep(1)
-            self.poll(check_door=False)
+            self.poll()
+        self.watching_door = False
         self.l_debug('watch_door', 'st={}'.format(self.status['doorinprocess']))
 
     def query(self):
