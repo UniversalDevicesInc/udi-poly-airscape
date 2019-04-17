@@ -64,25 +64,25 @@ class Airscape2(polyinterface.Node):
             if 'fanspd' in rdata:
                 self.status['fanspd'] = rdata['fanspd']
                 self.setDriver('ST',self.status["fanspd"])
-            if 'attic_temp' in self.status:
+            if 'attic_temp' in rdata:
                 self.status['attic_temp'] = rdata['attic_temp']
                 self.setDriver('CLITEMP', self.status["attic_temp"])
-            if 'timeremaining' in self.status:
+            if 'timeremaining' in rdata:
                 self.status['timeremaining'] = rdata['timeremaining']
                 self.setDriver('TIMEREM', self.status["timeremaining"])
-            if 'power' in self.status:
+            if 'power' in rdata:
                 self.status['power'] = rdata['power']
                 self.setDriver('CPW', self.status["power"])
-            if 'doorinprocess' in self.status:
+            if 'doorinprocess' in rdata:
                 self.status['doorinprocess'] = rdata['doorinprocess']
                 self.setDriver('GV2', self.status["doorinprocess"])
-            if 'cfm' in self.status:
+            if 'cfm' in rdata:
                 self.status['cfm'] = rdata['cfm']
                 self.setDriver('GV3', self.status["cfm"])
-            if 'house_temp' in self.status:
+            if 'house_temp' in rdata:
                 self.status['house_temp'] = rdata['hose_temp']
                 self.setDriver('GV4', self.status["house_temp"])
-            if 'oa_temp' in self.status:
+            if 'oa_temp' in rdata:
                 self.status['oa_temp'] = rdata['oa_temp']
                 self.setDriver('GV5', self.status["oa_temp"])
             if not self.watching_door:
