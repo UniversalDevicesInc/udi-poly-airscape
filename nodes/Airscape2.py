@@ -41,49 +41,55 @@ class Airscape2(polyinterface.Node):
         self.l_debug('longPoll', '...')
         self.poll()
 
-    def poll(self):
+    def poll(self,check_door=True):
         res = self.session.get('status.json.cgi',{},parse="json")
-        self.set_from_response(res)
+        self.set_from_response(res,check_door=check_door)
 
-    def set_from_response(self,res):
-        self.l_debug('set_from_repoinse',"Got: {}".format(res))
-        self.st = False
+    def set_from_response(self,res,check_door=True):
+        self.l_debug('set_from_response',"Got: {}".format(res))
+        self.st = self.check_response(res)
+        self.setDriver('GV1',1 if self.st else 0)
+        if self.st:
+            self.status = res['data']
+            # Inconsistent names
+            if 'attic' in self.status:
+                self.status['attic_temp'] = self.status["attic"]
+            if 'inside' in self.status:
+                self.status["house_temp"] = self.status['inside']
+            if 'oa' in self.status:
+                self.status["oa_temp"]    = self.status['oa']
+            # Set what we got
+            if 'fanspd' in self.status:
+                self.setDriver('ST',self.status["fanspd"])
+            if 'attic_temp' in self.status:
+                self.setDriver('CLITEMP', self.status["attic_temp"])
+            if 'timeremaining' in self.status:
+                self.setDriver('TIMEREM', self.status["timeremaining"])
+            if 'power' in self.status:
+                self.setDriver('CPW', self.status["power"])
+            if 'doorinprocess' in self.status:
+                self.setDriver('GV2', self.status["doorinprocess"])
+            if 'cfm' in self.status:
+                self.setDriver('GV3', self.status["cfm"])
+            if 'house_temp' in self.status:
+                self.setDriver('GV4', self.status["house_temp"])
+            if 'oa_temp' in self.status:
+                self.setDriver('GV5', self.status["oa_temp"])
+            if check_door:
+                self.watch_door()
+
+    def check_response(self,res):
         if res is not False and 'code' in res and res['code'] == 200:
             if 'data' in res and res['data'] is not False:
-                self.st = True
-                self.status = res['data']
-                # Inconsistent names
-                if 'attic' in self.status:
-                    self.status['attic_temp'] = self.status["attic"]
-                if 'inside' in self.status:
-                    self.status["house_temp"] = self.status['inside']
-                if 'oa' in self.status:
-                    self.status["oa_temp"]    = self.status['oa']
-                # Set what we got
-                if 'fanspd' in self.status:
-                    self.setDriver('ST',self.status["fanspd"])
-                if 'attic_temp' in self.status:
-                    self.setDriver('CLITEMP', self.status["attic_temp"])
-                if 'timeremaining' in self.status:
-                    self.setDriver('TIMEREM', self.status["timeremaining"])
-                if 'power' in self.status:
-                    self.setDriver('CPW', self.status["power"])
-                if 'doorinprocess' in self.status:
-                    if int(self.status['doorinprocess']) == 1:
-                        self.status['save_shortPoll'] = self.controller.polyConfig['shortPoll']
-                        self.controller.polyConfig['shortPoll'] = 1
-                    elif 'save_shortPoll' in self.status:
-                        self.controller.polyConfig['shortPoll'] = self.status['save_shortPoll']
-                    self.setDriver('GV2', self.status["doorinprocess"])
-                if 'cfm' in self.status:
-                    self.setDriver('GV3', self.status["cfm"])
-                if 'house_temp' in self.status:
-                    self.setDriver('GV4', self.status["house_temp"])
-                if 'oa_temp' in self.status:
-                    self.setDriver('GV5', self.status["oa_temp"])
+                return True
             else:
-                self.l_error('set_from_reponse', 'Got good code: {}'.format(res))
-        self.setDriver('GV1',1 if self.st else 0)
+                self.l_error('check_response', 'Got good code: {}'.format(res))
+        return False
+
+    def watch_door(self):
+        if int(self.status['doorinprocess']) == 1:
+            time.sleep(1)
+            self.poll(check_door=False)
 
     def query(self):
         self.poll()
