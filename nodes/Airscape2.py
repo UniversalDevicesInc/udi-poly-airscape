@@ -32,12 +32,12 @@ class Airscape2(polyinterface.Node):
         self.do_poll = True
 
     def shortPoll(self):
-        self.query()
+        self.poll()
 
     def longPoll(self):
-        self.query()
+        self.poll()
 
-    def query(self):
+    def poll(self):
         res = self.session.get("status.xml.cgi",{})
         self.l_debug('query',"Got: {}".format(res))
         st = 0
@@ -58,6 +58,8 @@ class Airscape2(polyinterface.Node):
         else:
             self.setDriver('GV1',0)
 
+    def query(self):
+        self.poll()
         self.reportDrivers()
 
     def setDriver(self,driver,value):

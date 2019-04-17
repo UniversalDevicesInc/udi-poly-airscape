@@ -22,7 +22,7 @@
       </accepts>
     </cmds>
 </nodeDef>
-	<!-- airscape node -->
+    <!-- airscape node -->
     <nodeDef id="airscape2_F" nls="as2">
         <editors />
         <sts>
