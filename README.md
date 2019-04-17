@@ -16,7 +16,7 @@ For all other status changes for Speed Down, Speed Up, or Off, you will see the 
 
 ## Requirements
 
-- ISY Firmeware running the latest 5.x Firmware
+- ISY Firmware running the latest 5.x Firmware
 - A machine running the [Polyglot V2](https://github.com/UniversalDevicesInc/polyglot-v2/blob/master/README.md)
 
 ## Issues
