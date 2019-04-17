@@ -104,16 +104,16 @@ class Airscape2(polyinterface.Node):
 
 
     def l_info(self, name, string):
-        LOGGER.info("%s:%s: %s" %  (self.id,name,string))
+        LOGGER.info("%s:%s:%s: %s" %  (self.id,self.name,name,string))
 
     def l_error(self, name, string):
-        LOGGER.error("%s:%s: %s" % (self.id,name,string))
+        LOGGER.error("%s:%s:%s: %s" % (self.id,self.name,name,string))
 
     def l_warning(self, name, string):
-        LOGGER.warning("%s:%s: %s" % (self.id,name,string))
+        LOGGER.warning("%s:%s:%s: %s" % (self.id,self.name,name,string))
 
     def l_debug(self, name, string):
-        LOGGER.debug("%s:%s: %s" % (self.id,name,string))
+        LOGGER.debug("%s:%s:%s: %s" % (self.id,self.name,name,string))
 
     drivers = [
         {'driver': 'ST',  'value': 0, 'uom': 56}, # speed
