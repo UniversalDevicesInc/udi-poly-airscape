@@ -46,13 +46,13 @@ class Airscape2(polyinterface.Node):
                 self.setDriver('GV1',1)
                 rdata = res['data']
                 self.setDriver('ST',rdata["fanspd"])
-                self.setDriver('CLITEMP', rdata["attic_temp"])
+                self.setDriver('CLITEMP', rdata["attic"]) # xml = attic_temp
                 self.setDriver('TIMEREM', rdata["timeremaining"])
                 self.setDriver('CPW', rdata["power"])
                 self.setDriver('GV2', rdata["doorinprocess"])
                 self.setDriver('GV3', rdata["cfm"])
-                self.setDriver('GV4', rdata["house_temp"])
-                self.setDriver('GV5', rdata["oa_temp"])
+                self.setDriver('GV4', rdata["inside"]) # xml = house_temp
+                self.setDriver('GV5', rdata["oa"]) # xml = oa_temp
             else:
                 self.setDriver('GV1',0)
         else:
