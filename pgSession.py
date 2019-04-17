@@ -87,7 +87,7 @@ class pgSession():
                 rtxt = remove_control_characters(response.text)
                 pattern = r'.*?<(.*?)>(.*?)</.*?>'
                 regex   = re.compile(pattern)
-                it = regex.finditer(file_contents)
+                it = regex.finditer(rtxt)
                 rdata = {}
                 for match in it:
                     rdata[match.group(1)] = match.group(2)
