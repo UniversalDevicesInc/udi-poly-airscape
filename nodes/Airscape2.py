@@ -112,24 +112,34 @@ class Airscape2(polyinterface.Node):
             return super(Airscape2, self).getDriver(driver)
 
     def setOff(self, command):
-        # The data returned by fanspd is not good xml, so ignore it.
+        # The data returned by fanspd is not good xml
         res = self.session.get('fanspd.cgi',{'dir': 4},parse="axml")
         self.set_from_response(res)
 
     def speedDown(self, command):
-        # The data returned by fanspd is not good xml, so ignore it.
+        # The data returned by fanspd is not good xml
         res = self.session.get('fanspd.cgi',{'dir': 3},parse="axml")
         self.set_from_response(res)
 
     def speedUp(self, command):
-        # The data returned by fanspd is not good xml, so ignore it.
+        # The data returned by fanspd is not good xml
         res = self.session.get('fanspd.cgi',{'dir': 1},parse="axml")
         self.set_from_response(res)
 
     def addHour(self, command):
-        # The data returned by fanspd is not good xml, so ignore it.
+        # The data returned by fanspd is not good xml
         res = self.session.get('fanspd.cgi',{'dir': 2},parse="axml")
         self.set_from_response(res)
+
+    def setSpeed(self, command):
+        val = int(command.get('value'))
+        if 'fanspd' in self.status:
+            while val > int(self.status['fanspd']):
+                self.speedUp(command)
+            while val < int(self.status['fanspd']):
+                self.speedDown(command)
+        else:
+            self.l_error('setSpeed', 'Called before we know the current fanspd, that should not be possible')
 
     def l_info(self, name, string):
         LOGGER.info("%s:%s:%s: %s" %  (self.id,self.name,name,string))
@@ -161,4 +171,5 @@ class Airscape2(polyinterface.Node):
         'FDDOWN': speedDown,
         'DOF': setOff,
         'ADD_HOUR': addHour,
+        'SET_SPEED' : setSpeed,
     }
