@@ -48,7 +48,7 @@ class Airscape2(polyinterface.Node):
         self.set_from_response(res)
 
     def set_from_response(self,res):
-        self.l_debug('set_from_response',"Got: {}".format(res))
+        self.l_debug('set_from_response',"In: {}".format(res))
         self.st = self.check_response(res)
         self.setDriver('GV1',1 if self.st else 0)
         if self.st:
@@ -79,6 +79,7 @@ class Airscape2(polyinterface.Node):
                 self.setDriver('GV5', self.status["oa_temp"])
             if not self.watching_door:
                 self.watch_door()
+        self.l_debug('set_from_response',"Out: {}".format(self.status))
 
     def check_response(self,res):
         if res is not False and 'code' in res and res['code'] == 200:
