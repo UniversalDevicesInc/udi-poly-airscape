@@ -21,46 +21,46 @@
        </cmd>
       </accepts>
     </cmds>
-</nodeDef>
-    <!-- airscape node -->
-    <nodeDef id="airscape2_F" nls="as2">
-        <editors />
-        <sts>
-          <!-- Online -->
-          <st id="GV1"  editor="bool"  />
-          <!-- Speed -->
-          <st id="ST" editor="SPEED" />
-          <!-- attic_temp -->
-          <st id="CLITEMP" editor="I_TEMP_F" />
-          <!-- doorinprocess  -->
-          <st id="GV2" editor="bool" />
-          <!-- timeremaining -->
-          <st id="TIMEREM" editor="TIMEREM" />
-          <!-- cfm -->
-          <st id="GV3" editor="CFM" />
-          <!-- power -->
-          <st id="CPW" editor="CPW" />
-          <!-- house_temp -->
-          <st id="GV4" editor="I_TEMP_F" />
-          <!-- oa_temp -->
-          <st id="GV5" editor="I_TEMP_F" />
-        </sts>
-        <cmds>
-          <sends>
-            <cmd id="DON" />
-            <cmd id="DOF" />
-            <cmd id="FDDOWN" />
-            <cmd id="FDUP" />
-          </sends>
-          <accepts>
-            <cmd id="FDDOWN" />
-            <cmd id="FDUP" />
-            <cmd id="DOF" />
-            <cmd id="ADD_HOUR" />
-            <cmd id="SET_SPEED">
-              <p id="" editor="SPEED" init="ST" />
-            </cmd>
-          </accepts>
-        </cmds>
-    </nodeDef>
+  </nodeDef>
+  <!-- airscape node -->
+  <nodeDef id="airscape2_F" nls="as2">
+    <editors />
+    <sts>
+      <!-- Online -->
+      <st id="GV1"  editor="bool"  />
+      <!-- Speed -->
+      <st id="ST" editor="SPEED" />
+      <!--  attic_temp -->
+      <st id="CLITEMP" editor="I_TEMP_F" />
+      <!-- doorinprocess  -->
+      <st id="GV2" editor="bool" />
+      <!-- timeremaining -->
+      <st id="TIMEREM" editor="TIMEREM" />
+      <!-- cfm -->
+      <st id="GV3" editor="CFM" />
+      <!-- power -->
+      <st id="CPW" editor="CPW" />
+      <!-- house_temp -->
+      <st id="GV4" editor="I_TEMP_F" />
+      <!-- oa_temp -->
+      <st id="GV5" editor="I_TEMP_F" />
+    </sts>
+    <cmds>
+      <sends>
+        <cmd id="DON" />
+        <cmd id="DOF" />
+        <cmd id="FDDOWN" />
+        <cmd id="FDUP" />
+      </sends>
+      <accepts>
+        <cmd id="FDDOWN" />
+        <cmd id="FDUP" />
+        <cmd id="DOF" />
+        <cmd id="ADD_HOUR" />
+        <cmd id="SET_SPEED">
+          <p id="" editor="SPEED" init="ST" />
+        </cmd>
+      </accepts>
+    </cmds>
+  </nodeDef>
 </nodeDefs>

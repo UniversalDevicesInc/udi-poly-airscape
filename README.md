@@ -6,6 +6,8 @@ This is a Polyglot V2 Nodeserver for the ISY 994i to control [Airscape Whold Hou
 
 When you Fan is off and you turn it on by increasing the speed then the nodeserver will watch the status by polling the fan every second to see when the door is done moving and the fan actually turns on.  This way you get immediate feedback because the 'Door Moving' will immediately be set to True, then when the fan actually turns on it will set the speed.
 
+When you use 'Set Speed', it will call speed up or speed down once every second to increase/decrease the speed until it sees the speed you requeste.
+
 For all other status changes for Speed Down, Speed Up, or Off, you will see the ISY status change right away since the Fan API returns the proper status on each command.
 
 ## Installation
@@ -22,10 +24,12 @@ For all other status changes for Speed Down, Speed Up, or Off, you will see the 
 ## Issues
 
 - Can't use the Airscape 2 node in programs, I know that's a big deal, but wanted to get the initial release out
-- Currently 'Set Speed' doesn't work, only 'Speed Up' and 'Speed Down'
+- Need to check error status of queries for Set Speed and abort if we get an error instead of getting stuck in a tight loop?
 
 ## Release Notes
 
+- 2.0.2:
+  - Set Speed works
 - 2.0.1:
   - When doorinprocess it watches the status in a tight loop.
 - 2.0.0:
