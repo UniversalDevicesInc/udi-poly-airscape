@@ -31,11 +31,11 @@ class Airscape2(polyinterface.Node):
         self.query()
         self.do_poll = True
 
-    def setOn(self, command):
-        self.setDriver('ST', 1)
+    def shortPoll(self):
+        self.query()
 
-    def setOff(self, command):
-        self.setDriver('ST', 0)
+    def longPoll(self):
+        self.query()
 
     def query(self):
         res = self.session.get("status.xml.cgi",{})
