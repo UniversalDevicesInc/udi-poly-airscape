@@ -10,6 +10,7 @@
 #
 #
 import polyinterface
+import time
 from pgSession import pgSession
 
 LOGGER = polyinterface.LOGGER
