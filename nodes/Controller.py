@@ -10,6 +10,7 @@ class Controller(polyinterface.Controller):
     def __init__(self, polyglot):
         super(Controller, self).__init__(polyglot)
         self.name = 'Airscape Controller'
+        self.hb = 0
         #self.poly.onConfig(self.process_config)
 
     def start(self):
@@ -20,15 +21,22 @@ class Controller(polyinterface.Controller):
         self.update_profile("")
 
     def shortPoll(self):
-        pass
+        for node in self.nodes:
+            if self.nodes[node].address != self.address and self.nodes[node].do_poll:
+                self.nodes[node].shortPoll()
 
     def longPoll(self):
-        pass
+        for node in self.nodes:
+            if self.nodes[node].address != self.address and self.nodes[node].do_poll:
+                self.nodes[node].longPoll()
+        self.heartbeat()
 
     def query(self):
         self.check_params()
         for node in self.nodes:
-            self.nodes[node].reportDrivers()
+            if self.nodes[node].address != self.address and self.nodes[node].do_poll:
+                self.nodes[node].query()
+        self.reportDrivers()
 
     def discover(self, command):
         if self.airscape2 is None or len(self.airscape2) == 0:
@@ -42,6 +50,15 @@ class Controller(polyinterface.Controller):
 
     def stop(self):
         LOGGER.debug('NodeServer stopped.')
+
+    def heartbeat(self):
+        LOGGER.debug('heartbeat hb={}'.format(self.hb))
+        if self.hb == 0:
+            self.reportCmd("DON",2)
+            self.hb = 1
+        else:
+            self.reportCmd("DOF",2)
+            self.hb = 0
 
     def get_typed_name(self,name):
         typedConfig = self.polyConfig.get('typedCustomData')

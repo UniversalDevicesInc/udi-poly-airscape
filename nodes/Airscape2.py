@@ -4,6 +4,7 @@
 # Airscape API Doc:  https://blog.airscapefans.com/archives/gen-2-controls-api
 #
 # TODO:
+# - Default shortPoll/longPoll shorter, query faster while doorinmotion?
 # - Parse weird xml data from fanspd.cgi
 # - If doorinprocess then tight loop to watch when speed increases or decreases?
 #
@@ -19,6 +20,7 @@ class Airscape2(polyinterface.Node):
         super(Airscape2, self).__init__(controller, primary, address, name)
         self.config_data = config_data
         self.debug_level = 1
+        self.do_poll = False # Don't let shortPoll happen during initialiation
 
     def start(self):
         self.driver = {}
@@ -27,6 +29,7 @@ class Airscape2(polyinterface.Node):
         self.host = self.config_data['host']
         self.session = pgSession(self,self.name,LOGGER,self.host,debug_level=self.debug_level)
         self.query()
+        self.do_poll = True
 
     def setOn(self, command):
         self.setDriver('ST', 1)
