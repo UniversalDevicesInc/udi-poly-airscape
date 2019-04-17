@@ -38,13 +38,13 @@ class Airscape2(polyinterface.Node):
         self.poll()
 
     def poll(self):
-        res = self.session.get("status.xml.cgi",{})
+        res = self.session.get("status.json.cgi",{},parse="json")
         self.l_debug('query',"Got: {}".format(res))
         st = 0
         if res is not False and 'code' in res and res['code'] == 200:
             if 'data' in res:
                 self.setDriver('GV1',1)
-                rdata = res['data']['airscapewhf']
+                rdata = res['data']
                 self.setDriver('ST',rdata["fanspd"])
                 self.setDriver('CLITEMP', rdata["attic_temp"])
                 self.setDriver('TIMEREM', rdata["timeremaining"])
@@ -74,14 +74,14 @@ class Airscape2(polyinterface.Node):
 
     def setOff(self, command):
         # The data returned by fanspd is not good xml, so ignore it.
-        res = self.session.get('fanspd.cgi',{'dir': 4},parse=False)
+        res = self.session.get('fanspd.cgi',{'dir': 4},parse="axml")
         self.l_debug('query',"Got: {}".format(res))
         if res is not False and res['code'] == 200:
             self.setDriver("ST",0)
 
     def speedDown(self, command):
         # The data returned by fanspd is not good xml, so ignore it.
-        res = self.session.get('fanspd.cgi',{'dir': 3},parse=False)
+        res = self.session.get('fanspd.cgi',{'dir': 3},parse="axml")
         self.l_debug('query',"Got: {}".format(res))
         if res is not False and res['code'] == 200:
             cst = int(self.getDriver("ST"))
@@ -90,7 +90,7 @@ class Airscape2(polyinterface.Node):
 
     def speedUp(self, command):
         # The data returned by fanspd is not good xml, so ignore it.
-        res = self.session.get('fanspd.cgi',{'dir': 1},parse=False)
+        res = self.session.get('fanspd.cgi',{'dir': 1},parse="axml")
         self.l_debug('query',"Got: {}".format(res))
         if res is not False and res['code'] == 200:
             cst = int(self.getDriver("ST"))
@@ -99,7 +99,7 @@ class Airscape2(polyinterface.Node):
 
     def addHour(self, command):
         # The data returned by fanspd is not good xml, so ignore it.
-        res = self.session.get('fanspd.cgi',{'dir': 2},parse=False)
+        res = self.session.get('fanspd.cgi',{'dir': 2},parse="axml")
         self.l_debug('query',"Got: {}".format(res))
 
 

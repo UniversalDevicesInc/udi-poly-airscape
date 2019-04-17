@@ -23,7 +23,7 @@ class pgSession():
             self.port_s = ':{}'.format(port)
         self.session = requests.Session()
 
-    def get(self,path,payload,auth=None,parse=True):
+    def get(self,path,payload,auth=None,parse="json"):
         url = "http://{}{}/{}".format(self.host,self.port_s,path)
         self.l_debug('get',0,"Sending: url={0} payload={1}".format(url,payload))
         # No speical headers?
@@ -48,11 +48,11 @@ class pgSession():
             return False
         return(self.response(response,'get',parse=parse))
 
-    def response(self,response,name,parse=True):
+    def response(self,response,name,parse="json"):
         fname = 'reponse:'+name
         self.l_debug(fname,0,' Got: code=%s' % (response.status_code))
         self.l_debug(fname,2,'      text=%s' % (response.text))
-        json_data = False
+        rdata = False
         if response.status_code == 200:
             self.l_debug(fname,0,' All good!')
         elif response.status_code == 400:
@@ -64,16 +64,36 @@ class pgSession():
             self.l_error(fname,"Unauthorized: %s: text: %s" % (response.url,response.text) )
         else:
             self.l_error(fname,"Unknown response %s: %s %s" % (response.status_code, response.url, response.text) )
-            self.l_error(fname,"Check system status: https://status.ecobee.com/")
         # No matter what, return the code and error
-        if parse:
+        if parse == "xml":
+            # It's xml
             try:
                 rtxt = remove_control_characters(response.text)
                 rdata = xmltodict.parse(rtxt)
             except (Exception) as err:
                 self.l_error(fname,'Failed to convert xml {0}: {1}'.format(rtxt,err), exc_info=True)
                 rdata = False
+        elif parse == "json":
+            # It's json
+            try:
+                rtxt = remove_control_characters(response.text)
+                rdata = json.loads(rtxt)
+            except (Exception) as err:
+                self.l_error(fname,'Failed to convert xml {0}: {1}'.format(rtxt,err), exc_info=True)
+                rdata = False
+        elif parse == "axml":
+            # Weird xml from airscape
+            try:
+                rtxt = remove_control_characters(response.text)
+                it = regex.finditer(file_contents)
+                rdata = {}
+                for match in it:
+                    rdata[match.group(1)] = match.group(2)
+            except (Exception) as err:
+                self.l_error(fname,'Failed to convert axml {0}: {1}'.format(rtxt,err), exc_info=True)
+                rdata = False
         else:
+            # return the exact reponse
             rdata = response.text
         return { 'code': response.status_code, 'data': rdata }
 
