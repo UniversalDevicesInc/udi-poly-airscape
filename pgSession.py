@@ -86,7 +86,7 @@ class pgSession():
             try:
                 rtxt = remove_control_characters(response.text)
                 pattern = r'.*?<(.*?)>(.*?)</.*?>'
-r               egex   = re.compile(pattern)
+                regex   = re.compile(pattern)
                 it = regex.finditer(file_contents)
                 rdata = {}
                 for match in it:
