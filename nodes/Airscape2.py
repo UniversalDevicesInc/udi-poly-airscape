@@ -30,33 +30,55 @@ class Airscape2(polyinterface.Node):
         self.session = pgSession(self,self.name,LOGGER,self.host,debug_level=self.debug_level)
         self.query()
         self.do_poll = True
+        self.status = {}
 
     def shortPoll(self):
+        #if 'doorinprocess' in self.status and int(self.status['doorinprocess']) == 1:
+        self.l_debug('shortPoll', '...')
         self.poll()
 
     def longPoll(self):
+        self.l_debug('longPoll', '...')
         self.poll()
 
     def poll(self):
-        res = self.session.get("status.json.cgi",{},parse="json")
-        self.l_debug('query',"Got: {}".format(res))
-        st = 0
+        res = self.session.get('status.json.cgi',{},parse="json")
+        self.set_from_response(res)
+
+    def set_from_response(self,res):
+        self.l_debug('set_from_repoinse',"Got: {}".format(res))
+        self.st = False
         if res is not False and 'code' in res and res['code'] == 200:
-            if 'data' in res:
-                self.setDriver('GV1',1)
-                rdata = res['data']
-                self.setDriver('ST',rdata["fanspd"])
-                self.setDriver('CLITEMP', rdata["attic"]) # xml = attic_temp
-                self.setDriver('TIMEREM', rdata["timeremaining"])
-                self.setDriver('CPW', rdata["power"])
-                self.setDriver('GV2', rdata["doorinprocess"])
-                self.setDriver('GV3', rdata["cfm"])
-                self.setDriver('GV4', rdata["inside"]) # xml = house_temp
-                self.setDriver('GV5', rdata["oa"]) # xml = oa_temp
+            if 'data' in res and res['data'] is not False:
+                self.st = True
+                self.status = res['data']
+                # Inconsistent names
+                if 'attic' in self.status:
+                    self.status['attic_temp'] = self.status["attic"]
+                if 'inside' in self.status:
+                    self.status["house_temp"] = self.status['inside']
+                if 'oa' in self.status:
+                    self.status["oa_temp"]    = self.status['oa']
+                # Set what we got
+                if 'fanspd' in self.status:
+                    self.setDriver('ST',self.status["fanspd"])
+                if 'attic_temp' in self.status:
+                    self.setDriver('CLITEMP', self.status["attic_temp"])
+                if 'timeremaining' in self.status:
+                    self.setDriver('TIMEREM', self.status["timeremaining"])
+                if 'power' in self.status:
+                    self.setDriver('CPW', self.status["power"])
+                if 'doorinprocess' in self.status:
+                    self.setDriver('GV2', self.status["doorinprocess"])
+                if 'cfm' in self.status:
+                    self.setDriver('GV3', self.status["cfm"])
+                if 'house_temp' in self.status:
+                    self.setDriver('GV4', self.status["house_temp"])
+                if 'oa_temp' in self.status:
+                    self.setDriver('GV5', self.status["oa_temp"])
             else:
-                self.setDriver('GV1',0)
-        else:
-            self.setDriver('GV1',0)
+                self.l_error('set_from_reponse', 'Got good code: {}'.format(res))
+        self.setDriver('GV1',1 if self.st else 0)
 
     def query(self):
         self.poll()
@@ -75,33 +97,22 @@ class Airscape2(polyinterface.Node):
     def setOff(self, command):
         # The data returned by fanspd is not good xml, so ignore it.
         res = self.session.get('fanspd.cgi',{'dir': 4},parse="axml")
-        self.l_debug('query',"Got: {}".format(res))
-        if res is not False and res['code'] == 200:
-            self.setDriver("ST",0)
+        self.set_from_response(res)
 
     def speedDown(self, command):
         # The data returned by fanspd is not good xml, so ignore it.
         res = self.session.get('fanspd.cgi',{'dir': 3},parse="axml")
-        self.l_debug('query',"Got: {}".format(res))
-        if res is not False and res['code'] == 200:
-            cst = int(self.getDriver("ST"))
-            if cst > 0:
-                self.setDriver("ST",cst-1)
+        self.set_from_response(res)
 
     def speedUp(self, command):
         # The data returned by fanspd is not good xml, so ignore it.
         res = self.session.get('fanspd.cgi',{'dir': 1},parse="axml")
-        self.l_debug('query',"Got: {}".format(res))
-        if res is not False and res['code'] == 200:
-            cst = int(self.getDriver("ST"))
-            if cst < 8:
-                self.setDriver("ST",cst+1)
+        self.set_from_response(res)
 
     def addHour(self, command):
         # The data returned by fanspd is not good xml, so ignore it.
         res = self.session.get('fanspd.cgi',{'dir': 2},parse="axml")
-        self.l_debug('query',"Got: {}".format(res))
-
+        self.set_from_response(res)
 
     def l_info(self, name, string):
         LOGGER.info("%s:%s:%s: %s" %  (self.id,self.name,name,string))
