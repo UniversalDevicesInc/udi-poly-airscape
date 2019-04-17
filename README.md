@@ -15,7 +15,8 @@ This is a Polyglot V2 Nodeserver for the ISY 994i to control [Airscape Whold Hou
 
 ## Issues
 
-- Currently 'Set Speed' doesn't work, only 'Speed Up' and 'Speeed Down'
+- Can't use the Airscape 2 node in programs, I know that's a big deal, but wanted to get the initial release out
+- Currently 'Set Speed' doesn't work, only 'Speed Up' and 'Speed Down'
 - When Speed Up/Speed Down are pressed, and the command is succesfully passed to the fan, the nodeserver assumes the speed is set.  In the future it will pull back the status immediatly from the fan, but this isn't simple because the fan doesn't go from 0 -> 1 right away if you have doors it waits for the doors to open enough before the fan speed changes.  If a shortPoll interval queries the fan before it goes from 0 -> 1 then it will go back to zero, but the next query will update it again.
 - Need to monitor doormotion param and query in a tighter loop until it's done.
 
