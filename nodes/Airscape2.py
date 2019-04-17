@@ -70,10 +70,10 @@ class Airscape2(polyinterface.Node):
                     self.setDriver('CPW', self.status["power"])
                 if 'doorinprocess' in self.status:
                     if int(self.status['doorinprocess']) == 1:
-                        self.status['save_shortPoll'] = self.polyConfig['shortPoll']
-                        self.polyConfig['shortPoll'] = 1
+                        self.status['save_shortPoll'] = self.controller.polyConfig['shortPoll']
+                        self.controller.polyConfig['shortPoll'] = 1
                     elif 'save_shortPoll' in self.status:
-                        self.polyConfig['shortPoll'] = self.status['save_shortPoll']
+                        self.controller.polyConfig['shortPoll'] = self.status['save_shortPoll']
                     self.setDriver('GV2', self.status["doorinprocess"])
                 if 'cfm' in self.status:
                     self.setDriver('GV3', self.status["cfm"])
