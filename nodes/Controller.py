@@ -34,7 +34,7 @@ class Controller(polyinterface.Controller):
     def query(self):
         self.check_params()
         for node in self.nodes:
-            if self.nodes[node].address != self.address and self.nodes[node].do_poll:
+            if self.nodes[node].address != self.address:
                 self.nodes[node].query()
         self.reportDrivers()
 
@@ -159,11 +159,17 @@ class Controller(polyinterface.Controller):
     def l_debug(self, name, string):
         LOGGER.debug("%s:%s: %s" % (self.id,name,string))
 
+    def cmd_debug_mode(self,command):
+        val = int(command.get('value'))
+        self.l_info("cmd_debug_mode",val)
+        self.set_debug_mode(val)
+
     id = 'controller'
     commands = {
         'QUERY': query,
         'DISCOVER': discover,
         'UPDATE_PROFILE': update_profile,
+        'DEBUG': cmd_debug_mode,
     }
     drivers = [
         {'driver': 'ST', 'value': 0, 'uom': 2}
