@@ -133,7 +133,13 @@ class Airscape2(polyinterface.Node):
 
     def setSpeed(self, command):
         val = int(command.get('value'))
-        if 'fanspd' in self.status:
+        if not self.do_poll:
+            self.l_debug('setSpeed', 'waiting for startup to complete')
+            while not self.do_poll:
+                time.sleep(1)
+        if val == 0:
+            self.setOff('')
+        elif 'fanspd' in self.status:
             while val > int(self.status['fanspd']):
                 self.speedUp(command)
             while val < int(self.status['fanspd']):
