@@ -23,16 +23,16 @@ class Airscape2(polyinterface.Node):
         self.debug_level = 1
         self.do_poll = False # Don't let shortPoll happen during initialiation
         self.watching_door = False
+        self.status = {}
+        self.driver = {}
 
     def start(self):
-        self.driver = {}
         self.setDriver('GV1', 0)
         self.l_info('start', 'config={}'.format(self.config_data))
         self.host = self.config_data['host']
         self.session = pgSession(self,self.name,LOGGER,self.host,debug_level=self.debug_level)
         self.query()
         self.do_poll = True
-        self.status = {}
 
     def shortPoll(self):
         #if 'doorinprocess' in self.status and int(self.status['doorinprocess']) == 1:
@@ -52,30 +52,38 @@ class Airscape2(polyinterface.Node):
         self.st = self.check_response(res)
         self.setDriver('GV1',1 if self.st else 0)
         if self.st:
-            self.status = res['data']
+            rdata = res['data']
             # Inconsistent names
-            if 'attic' in self.status:
-                self.status['attic_temp'] = self.status["attic"]
-            if 'inside' in self.status:
-                self.status["house_temp"] = self.status['inside']
-            if 'oa' in self.status:
-                self.status["oa_temp"]    = self.status['oa']
-            # Set what we got
-            if 'fanspd' in self.status:
+            if 'attic' in rdata:
+                rdata['attic_temp'] = rdata["attic"]
+            if 'inside' in rdata:
+                rdata["house_temp"] = rdata['inside']
+            if 'oa' in rdata:
+                rdata["oa_temp"]    = rdata['oa']
+            # Update all values we received
+            if 'fanspd' in rdata:
+                self.status['fanspd'] = rdata['fanspd']
                 self.setDriver('ST',self.status["fanspd"])
             if 'attic_temp' in self.status:
+                self.status['attic_temp'] = rdata['attic_temp']
                 self.setDriver('CLITEMP', self.status["attic_temp"])
             if 'timeremaining' in self.status:
+                self.status['timeremaining'] = rdata['timeremaining']
                 self.setDriver('TIMEREM', self.status["timeremaining"])
             if 'power' in self.status:
+                self.status['power'] = rdata['power']
                 self.setDriver('CPW', self.status["power"])
             if 'doorinprocess' in self.status:
+                self.status['doorinprocess'] = rdata['doorinprocess']
                 self.setDriver('GV2', self.status["doorinprocess"])
             if 'cfm' in self.status:
+                self.status['cfm'] = rdata['cfm']
                 self.setDriver('GV3', self.status["cfm"])
             if 'house_temp' in self.status:
+                self.status['house_temp'] = rdata['hose_temp']
                 self.setDriver('GV4', self.status["house_temp"])
             if 'oa_temp' in self.status:
+                self.status['oa_temp'] = rdata['oa_temp']
                 self.setDriver('GV5', self.status["oa_temp"])
             if not self.watching_door:
                 self.watch_door()
