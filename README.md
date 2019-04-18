@@ -25,6 +25,7 @@ For all other status changes for Speed Down, Speed Up, or Off, you will see the 
 
 - Can't use the Airscape 2 node in programs, I know that's a big deal, but wanted to get the initial release out
 - Need to check error status of queries for Set Speed and abort if we get an error instead of getting stuck in a tight loop?
+- Don't upload profile on every restart
 
 ## Release Notes
 
