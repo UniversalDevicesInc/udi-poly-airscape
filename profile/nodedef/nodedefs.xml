@@ -38,8 +38,6 @@
       <st id="TIMEREM" editor="TIMEREM" />
       <!-- cfm -->
       <st id="GV3" editor="CFM" />
-      <!-- power -->
-      <st id="CPW" editor="CPW" />
       <!-- house_temp -->
       <st id="GV4" editor="I_TEMP_F" />
       <!-- oa_temp -->
