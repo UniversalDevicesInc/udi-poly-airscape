@@ -36,14 +36,14 @@
       <st id="GV2" editor="bool" />
       <!-- timeremaining -->
       <st id="TIMEREM" editor="TIMEREM" />
+      <!-- power -->
+      <st id="CPW" editor="CPW" />
       <!-- cfm -->
       <st id="GV3" editor="CFM" />
       <!-- house_temp -->
       <st id="GV4" editor="I_TEMP_F" />
       <!-- oa_temp -->
       <st id="GV5" editor="I_TEMP_F" />
-      <!-- power -->
-      <st id="GV6" editor="POWER" />
     </sts>
     <cmds>
       <sends>
