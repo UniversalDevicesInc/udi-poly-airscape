@@ -20,7 +20,7 @@
     <range uom="17" min="-50" max="150" step="0.5" prec="1" />
   </editor>
   <editor id="POWER">
-    <range uom="73" prec="0" />
+    <range uom="73" prec="0" min="0" max="10000" />
   </editor>
   <editor id="CFM">
     <range uom="7" prec="0" min="0" max="10000" />
