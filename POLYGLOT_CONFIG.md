@@ -1,6 +1,8 @@
 
 # Airscape Configuration
 
+The Fan is polled every shortPoll seconds to get the current status.  If you want yours polled faster than the default please change it and restart the node server.
+
 ## Airscape 2
 
 - Click: Add Airscape 2

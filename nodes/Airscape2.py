@@ -23,16 +23,16 @@ class Airscape2(polyinterface.Node):
         self.debug_level = 1
         self.do_poll = False # Don't let shortPoll happen during initialiation
         self.watching_door = False
+        self.status = {}
+        self.driver = {}
 
     def start(self):
-        self.driver = {}
         self.setDriver('GV1', 0)
         self.l_info('start', 'config={}'.format(self.config_data))
         self.host = self.config_data['host']
         self.session = pgSession(self,self.name,LOGGER,self.host,debug_level=self.debug_level)
         self.query()
         self.do_poll = True
-        self.status = {}
 
     def shortPoll(self):
         #if 'doorinprocess' in self.status and int(self.status['doorinprocess']) == 1:
@@ -48,37 +48,46 @@ class Airscape2(polyinterface.Node):
         self.set_from_response(res)
 
     def set_from_response(self,res):
-        self.l_debug('set_from_response',"Got: {}".format(res))
+        self.l_debug('set_from_response',"In: {}".format(res))
         self.st = self.check_response(res)
         self.setDriver('GV1',1 if self.st else 0)
         if self.st:
-            self.status = res['data']
+            rdata = res['data']
             # Inconsistent names
-            if 'attic' in self.status:
-                self.status['attic_temp'] = self.status["attic"]
-            if 'inside' in self.status:
-                self.status["house_temp"] = self.status['inside']
-            if 'oa' in self.status:
-                self.status["oa_temp"]    = self.status['oa']
-            # Set what we got
-            if 'fanspd' in self.status:
+            if 'attic' in rdata:
+                rdata['attic_temp'] = rdata["attic"]
+            if 'inside' in rdata:
+                rdata["house_temp"] = rdata['inside']
+            if 'oa' in rdata:
+                rdata["oa_temp"]    = rdata['oa']
+            # Update all values we received
+            if 'fanspd' in rdata:
+                self.status['fanspd'] = rdata['fanspd']
                 self.setDriver('ST',self.status["fanspd"])
-            if 'attic_temp' in self.status:
+            if 'attic_temp' in rdata:
+                self.status['attic_temp'] = rdata['attic_temp']
                 self.setDriver('CLITEMP', self.status["attic_temp"])
-            if 'timeremaining' in self.status:
+            if 'timeremaining' in rdata:
+                self.status['timeremaining'] = rdata['timeremaining']
                 self.setDriver('TIMEREM', self.status["timeremaining"])
-            if 'power' in self.status:
+            if 'power' in rdata:
+                self.status['power'] = rdata['power']
                 self.setDriver('CPW', self.status["power"])
-            if 'doorinprocess' in self.status:
+            if 'doorinprocess' in rdata:
+                self.status['doorinprocess'] = rdata['doorinprocess']
                 self.setDriver('GV2', self.status["doorinprocess"])
-            if 'cfm' in self.status:
+            if 'cfm' in rdata:
+                self.status['cfm'] = rdata['cfm']
                 self.setDriver('GV3', self.status["cfm"])
-            if 'house_temp' in self.status:
+            if 'house_temp' in rdata:
+                self.status['house_temp'] = rdata['house_temp']
                 self.setDriver('GV4', self.status["house_temp"])
-            if 'oa_temp' in self.status:
+            if 'oa_temp' in rdata:
+                self.status['oa_temp'] = rdata['oa_temp']
                 self.setDriver('GV5', self.status["oa_temp"])
             if not self.watching_door:
                 self.watch_door()
+        self.l_debug('set_from_response',"Out: {}".format(self.status))
 
     def check_response(self,res):
         if res is not False and 'code' in res and res['code'] == 200:
@@ -112,24 +121,42 @@ class Airscape2(polyinterface.Node):
             return super(Airscape2, self).getDriver(driver)
 
     def setOff(self, command):
-        # The data returned by fanspd is not good xml, so ignore it.
+        # The data returned by fanspd is not good xml
         res = self.session.get('fanspd.cgi',{'dir': 4},parse="axml")
         self.set_from_response(res)
 
     def speedDown(self, command):
-        # The data returned by fanspd is not good xml, so ignore it.
+        # The data returned by fanspd is not good xml
         res = self.session.get('fanspd.cgi',{'dir': 3},parse="axml")
         self.set_from_response(res)
 
     def speedUp(self, command):
-        # The data returned by fanspd is not good xml, so ignore it.
+        # The data returned by fanspd is not good xml
         res = self.session.get('fanspd.cgi',{'dir': 1},parse="axml")
         self.set_from_response(res)
 
     def addHour(self, command):
-        # The data returned by fanspd is not good xml, so ignore it.
+        # The data returned by fanspd is not good xml
         res = self.session.get('fanspd.cgi',{'dir': 2},parse="axml")
         self.set_from_response(res)
+
+    def setSpeed(self, command):
+        val = int(command.get('value'))
+        if not self.do_poll:
+            self.l_debug('setSpeed', 'waiting for startup to complete')
+            while not self.do_poll:
+                time.sleep(1)
+        if val == 0:
+            self.setOff('')
+        elif 'fanspd' in self.status:
+            while val > int(self.status['fanspd']):
+                self.speedUp(command)
+                time.sleep(1)
+            while val < int(self.status['fanspd']):
+                self.speedDown(command)
+                time.sleep(1)
+        else:
+            self.l_error('setSpeed', 'Called before we know the current fanspd, that should not be possible')
 
     def l_info(self, name, string):
         LOGGER.info("%s:%s:%s: %s" %  (self.id,self.name,name,string))
@@ -161,4 +188,5 @@ class Airscape2(polyinterface.Node):
         'FDDOWN': speedDown,
         'DOF': setOff,
         'ADD_HOUR': addHour,
+        'SET_SPEED' : setSpeed,
     }
