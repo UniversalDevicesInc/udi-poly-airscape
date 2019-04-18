@@ -23,15 +23,16 @@ For all other status changes for Speed Down, Speed Up, or Off, you will see the 
 
 ## Issues
 
-- Can't use the Airscape 2 node in programs, I know that's a big deal, but wanted to get the initial release out
+- Only works for F, not C
 - Need to check error status of queries for Set Speed and abort if we get an error instead of getting stuck in a tight loop?
 - Don't upload profile on every restart
 
 ## Release Notes
 
-- 2.0.2:
+- 2.0.2: 04/17/2019
   - Set Speed works
+  - Can reference everything in Programs
 - 2.0.1:
   - When doorinprocess it watches the status in a tight loop.
-- 2.0.0:
+- 2.0.0: 04/16/2019
   - Initial Release
