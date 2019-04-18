@@ -31,6 +31,10 @@ By default the 'Debug Level' on the Controller is set to Debug.  Please leave it
 
 ## Release Notes
 
+- 2.0.3: 04/18/2019
+  - Add missing requests to requirements.txt
+  - Make sure node address is lowercase and <= 14 characters
+  - Change default polling to 5 seconds
 - 2.0.2: 04/17/2019
   - Set Speed works
   - Can reference everything in Programs
