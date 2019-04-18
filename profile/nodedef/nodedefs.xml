@@ -42,6 +42,8 @@
       <st id="GV4" editor="I_TEMP_F" />
       <!-- oa_temp -->
       <st id="GV5" editor="I_TEMP_F" />
+      <!-- power -->
+      <st id="GV6" editor="POWER" />
     </sts>
     <cmds>
       <sends>

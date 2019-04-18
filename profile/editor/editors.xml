@@ -19,7 +19,7 @@
   <editor id="I_TEMP_F">
     <range uom="17" min="-50" max="150" step="0.5" prec="1" />
   </editor>
-  <editor id="CPW">
+  <editor id="POWER">
     <range uom="73" prec="0" />
   </editor>
   <editor id="CFM">
