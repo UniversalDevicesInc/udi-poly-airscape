@@ -26,7 +26,9 @@ ST-as2-GV2-NAME = Door Moving
 ST-as2-GV3-NAME = CFM
 ST-as2-GV4-NAME = House Temperature
 ST-as2-GV5-NAME = Outside Temperature
-ST-as2-GV6-NAME = Current Power
+ST-as2-CPW-NAME = Current Power
+ST-as2-GV6-NAME = Interlock 1
+ST-as2-GV7-NAME = Interlock 2
 
 CMD-as2-ADD_HOUR-NAME = Add Hour
 CMD-as2-SET_SPEED-NAME = Set Speed

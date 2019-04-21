@@ -12,7 +12,10 @@
   <editor id="TIMEREM">
     <range uom="56" min="0" max="100000" />
   </editor>
-  <!-- Temperature -->
+  <!-- No idea what min/max should be here? -->
+  <editor id="I_INTERLOCK">
+    <range uom="56" min="-100000" max="100000" />
+  </editor>  <!-- Temperature -->
   <editor id="I_TEMP_C">
     <range uom="4" min="-50" max="75" step="0.5" prec="1" />
   </editor>

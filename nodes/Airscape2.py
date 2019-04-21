@@ -4,10 +4,7 @@
 # Airscape API Doc:  https://blog.airscapefans.com/archives/gen-2-controls-api
 #
 # TODO:
-# - Default shortPoll/longPoll shorter, query faster while doorinmotion?
-# - Parse weird xml data from fanspd.cgi
-# - If doorinprocess then tight loop to watch when speed increases or decreases?
-#
+# - Nothing
 #
 import polyinterface
 import time
@@ -47,44 +44,39 @@ class Airscape2(polyinterface.Node):
         res = self.session.get('status.json.cgi',{},parse="json")
         self.set_from_response(res)
 
+    # XREF from airscape to drivers
+    all_dinfo = {
+        'fanspd': 'ST',
+        'attic_temp': 'CLITEMP',
+        'timeremaining': 'TIMEREM',
+        'power': 'CPW',
+        'doorinprocess': 'GV2',
+        'cfm': 'GV3',
+        'house_temp': 'GV4',
+        'oa_temp': 'GV5',
+        'interlock1': 'GV6',
+        'interlock2': 'GV7'
+    }
+    # xref from setfanspd to status.cgi. Why are the different???
+    all_xref = {
+        'attic': 'attic_temp',
+        'inside': 'house_temp',
+        'oa': 'oa_temp'
+    }
     def set_from_response(self,res):
         self.l_debug('set_from_response',"In: {}".format(res))
         self.st = self.check_response(res)
         self.setDriver('GV1',1 if self.st else 0)
         if self.st:
             rdata = res['data']
-            # Inconsistent names
-            if 'attic' in rdata:
-                rdata['attic_temp'] = rdata["attic"]
-            if 'inside' in rdata:
-                rdata["house_temp"] = rdata['inside']
-            if 'oa' in rdata:
-                rdata["oa_temp"]    = rdata['oa']
-            # Update all values we received
-            if 'fanspd' in rdata:
-                self.status['fanspd'] = rdata['fanspd']
-                self.setDriver('ST',self.status["fanspd"])
-            if 'attic_temp' in rdata:
-                self.status['attic_temp'] = rdata['attic_temp']
-                self.setDriver('CLITEMP', self.status["attic_temp"])
-            if 'timeremaining' in rdata:
-                self.status['timeremaining'] = rdata['timeremaining']
-                self.setDriver('TIMEREM', self.status["timeremaining"])
-            if 'power' in rdata:
-                self.status['power'] = rdata['power']
-                self.setDriver('CPW', self.status["power"])
-            if 'doorinprocess' in rdata:
-                self.status['doorinprocess'] = rdata['doorinprocess']
-                self.setDriver('GV2', self.status["doorinprocess"])
-            if 'cfm' in rdata:
-                self.status['cfm'] = rdata['cfm']
-                self.setDriver('GV3', self.status["cfm"])
-            if 'house_temp' in rdata:
-                self.status['house_temp'] = rdata['house_temp']
-                self.setDriver('GV4', self.status["house_temp"])
-            if 'oa_temp' in rdata:
-                self.status['oa_temp'] = rdata['oa_temp']
-                self.setDriver('GV5', self.status["oa_temp"])
+            for key, value in self.all_xref.items():
+                if key in rdata:
+                    rdata[value] = rdata[key]
+            for key, value in self.all_dinfo.items():
+                if key in rdata:
+                    self.status[key] = rdata[key]
+                    self.setDriver(value,rdata[key])
+            # Wait for the door if we are not watching it already
             if not self.watching_door:
                 self.watch_door()
         self.l_debug('set_from_response',"Out: {}".format(self.status))
@@ -173,13 +165,15 @@ class Airscape2(polyinterface.Node):
     drivers = [
         {'driver': 'ST',  'value': 0, 'uom': 56}, # speed
         {'driver': 'CLITEMP', 'value': 0, 'uom': 17}, # attic_temp
-        {'driver': 'TIMEREM', 'value': 0, 'uom': 20}, # hours
+        {'driver': 'TIMEREM', 'value': 0, 'uom': 56}, # minutes
         {'driver': 'CPW', 'value': 0, 'uom': 73}, # watt?
         {'driver': 'GV1', 'value': 0, 'uom': 2}, # Online
         {'driver': 'GV2', 'value': 0, 'uom': 2}, # doorinprocess
         {'driver': 'GV3', 'value': 0, 'uom': 7}, # cfm
         {'driver': 'GV4', 'value': 0, 'uom': 17}, # house_temp
         {'driver': 'GV5', 'value': 0, 'uom': 17}, # oa_temp
+        {'driver': 'GV6', 'value': 0, 'uom': 56}, # interlock1
+        {'driver': 'GV7', 'value': 0, 'uom': 56}, # interlock2
 
     ]
     id = 'airscape2_F'

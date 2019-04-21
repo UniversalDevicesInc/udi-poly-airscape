@@ -44,6 +44,10 @@
       <st id="GV4" editor="I_TEMP_F" />
       <!-- oa_temp -->
       <st id="GV5" editor="I_TEMP_F" />
+      <!-- interlock1 -->
+      <st id="GV6" editor="I_INTERLOCK" />
+      <!-- interlock2 -->
+      <st id="GV7" editor="I_INTERLOCK" />
     </sts>
     <cmds>
       <sends>

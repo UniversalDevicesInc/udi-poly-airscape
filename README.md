@@ -27,10 +27,14 @@ By default the 'Debug Level' on the Controller is set to Debug.  Please leave it
 
 - Only works for F, not C
 - Need to check error status of queries for Set Speed and abort if we get an error instead of getting stuck in a tight loop?
-- Don't upload profile on every restart
+- Don't upload profile on every restart, add version checking
 
 ## Release Notes
 
+- 2.0.4: 04/21/2019
+  - Added interlock 1 & 2, althought I don't have the options yet, so can't completly test
+  - Fixed Timer to show correctly
+  - Cleaned up code.
 - 2.0.3: 04/18/2019
   - Add missing requests to requirements.txt
   - Make sure node address is lowercase and <= 14 characters
