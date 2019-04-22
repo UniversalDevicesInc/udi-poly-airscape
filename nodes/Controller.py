@@ -1,6 +1,7 @@
 
 import polyinterface
 import logging
+from copy import deepcopy
 from nodes import Airscape2
 from node_funcs import *
 
