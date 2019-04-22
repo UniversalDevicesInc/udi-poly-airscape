@@ -17,6 +17,7 @@ By default the 'Debug Level' on the Controller is set to Debug.  Please leave it
 - Download from the Nodeservers -> Nodeserver Store
 - Install from the Nodeservers -> AddNode Server
 - Add the info for your fan in the NodeServer configuration page
+- Restart the Nodeserver
 
 ## Requirements
 
@@ -31,6 +32,7 @@ By default the 'Debug Level' on the Controller is set to Debug.  Please leave it
 
 - 2.0.5: Not released yet
   - Add timeout in watch_door for 60 seconds
+  - [Don't upload profile on every restart, add version checking](https://github.com/jimboca/udi-poly-airscape/issues/2)
 - 2.0.4: 04/21/2019
   - Added interlock 1 & 2, although I don't have the equipment yet, so can't completely test
   - Fixed Timer to show correctly
