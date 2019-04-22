@@ -1,6 +1,6 @@
 # Airscape NodeServer
 
-This is a Polyglot V2 Nodeserver for the ISY 994i to control [Airscape Whold House Fans](https://airscapefans.com/) using the [Gen 2 Controls API](https://blog.airscapefans.com/archives/gen-2-controls-api).  If you don't already own one of these awesome fans, you can not purchase the Gen 2 controller online, you have to call them.
+This is a Polyglot V2 Nodeserver for the ISY 994i to control [Airscape Whole House Fans](https://airscapefans.com/) using the [Gen 2 Controls API](https://blog.airscapefans.com/archives/gen-2-controls-api).  If you don't already own one of these awesome fans, you can not purchase the Gen 2 controller online, you have to call them.
 
 ## Information
 
@@ -25,14 +25,14 @@ By default the 'Debug Level' on the Controller is set to Debug.  Please leave it
 
 ## Issues
 
-- Only works for F, not C
-- Need to check error status of queries for Set Speed and abort if we get an error instead of getting stuck in a tight loop?
-- Don't upload profile on every restart, add version checking
+[Git Hub Issue Tracker](https://github.com/jimboca/udi-poly-airscape/issues)
 
 ## Release Notes
 
+- 2.0.5: Not released yet
+  - Add timeout in watch_door for 60 seconds
 - 2.0.4: 04/21/2019
-  - Added interlock 1 & 2, althought I don't have the options yet, so can't completly test
+  - Added interlock 1 & 2, although I don't have the equipment yet, so can't completely test
   - Fixed Timer to show correctly
   - Cleaned up code.
 - 2.0.3: 04/18/2019

@@ -16,9 +16,9 @@ class Controller(polyinterface.Controller):
     def start(self):
         LOGGER.info('Started Airscape NodeServer')
         self.set_debug_mode()
+        self.check_profile()
         self.check_params()
         self.discover("")
-        self.update_profile("")
 
     def shortPoll(self):
         for node in self.nodes:
@@ -67,7 +67,6 @@ class Controller(polyinterface.Controller):
         return typedConfig.get(name)
 
     def check_params(self):
-
         params = [
             {
                 'name': 'airscape2',
@@ -99,6 +98,25 @@ class Controller(polyinterface.Controller):
 
     def remove_notice_config(self,command):
         self.removeNotice('config')
+
+    def check_profile(self,thermostats):
+        self.profile_info = get_profile_info(LOGGER)
+        cdata = deepcopy(self.polyConfig['customData'])
+        self.l_info('check_profile','profile_info={}'.format(self.profile_info))
+        self.l_info('check_profile','  customData={}'.format(cdata))
+        if not 'profile_info' in cdata:
+            self.l_info('check_profile','Updated needed since it has never been recorded.')
+            update_profile = True
+        elif self.profile_info['version'] == cdata['profile_info']['version']:
+            self.l_info('check_profile','No updated needed: "{}" == "{}"'.format(self.profile_info['version'],cdata['profile_info']['version']))
+            update_profile = False
+        else:
+            self.l_info('check_profile','Udated needed: "{}" != "{}"'.format(self.profile_info['version'],cdata['profile_info']['version']))
+            update_profile = True
+        if update_profile:
+            self.update_profile("")
+            cdata['profile_info'] = self.profile_info
+            self.saveCustomData(cdata)
 
     def update_profile(self,command):
         LOGGER.info('update_profile:')

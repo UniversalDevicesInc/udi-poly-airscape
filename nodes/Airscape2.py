@@ -90,10 +90,15 @@ class Airscape2(polyinterface.Node):
         return False
 
     def watch_door(self):
+        cnt = 0
         while int(self.status['doorinprocess']) == 1:
+            if cnt > 60:
+                self.l_error('watch_door', 'Timeout waiting for door to open?')
+                break
             self.watching_door = True
             self.l_debug('watch_door', 'st={}'.format(self.status['doorinprocess']))
             time.sleep(1)
+            cnt += 1
             self.poll()
         self.watching_door = False
         self.l_debug('watch_door', 'st={}'.format(self.status['doorinprocess']))
