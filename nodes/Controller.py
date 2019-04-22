@@ -99,7 +99,7 @@ class Controller(polyinterface.Controller):
     def remove_notice_config(self,command):
         self.removeNotice('config')
 
-    def check_profile(self,thermostats):
+    def check_profile(self):
         self.profile_info = get_profile_info(LOGGER)
         cdata = deepcopy(self.polyConfig['customData'])
         self.l_info('check_profile','profile_info={}'.format(self.profile_info))
