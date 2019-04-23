@@ -30,6 +30,8 @@ By default the 'Debug Level' on the Controller is set to Debug.  Please leave it
 
 ## Release Notes
 
+- 2.0.6: (Not Released)
+  - Set Controller default ST=1 as it should be.
 - 2.0.5: 04/22/2019
   - Add timeout in watch_door for 60 seconds
   - [Don't upload profile on every restart, add version checking](https://github.com/jimboca/udi-poly-airscape/issues/2)

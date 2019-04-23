@@ -191,6 +191,6 @@ class Controller(polyinterface.Controller):
         'DEBUG': cmd_debug_mode,
     }
     drivers = [
-        {'driver': 'ST', 'value': 0, 'uom': 2},
+        {'driver': 'ST', 'value': 1, 'uom': 2},
         {'driver': 'GV1', 'value': 10, 'uom': 25}
     ]
