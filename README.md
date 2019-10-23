@@ -30,6 +30,8 @@ By default the 'Debug Level' on the Controller is set to Debug.  Please leave it
 
 ## Release Notes
 
+- 2.0.7: 10/22/2019
+  - Modify speed range from 0-9 to 0-10, Thanks @BillB66
 - 2.0.6: 04/23/2019
   - Set Controller default ST=1 as it should be.
 - 2.0.5: 04/22/2019
