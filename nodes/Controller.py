@@ -17,6 +17,7 @@ class Controller(polyinterface.Controller):
     def start(self):
         LOGGER.info('Started Airscape NodeServer')
         self.set_debug_mode()
+        self.heartbeat()
         self.check_profile()
         self.check_params()
         self.discover("")
