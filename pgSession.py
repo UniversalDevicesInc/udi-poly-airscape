@@ -77,6 +77,8 @@ class pgSession():
             # It's json
             try:
                 rtxt = remove_control_characters(response.text)
+                # Always remove the server_response data since it may not be parseable...
+                rtxt = re.sub(r'("server_response":).*("dip_switches")',r'\1 "", \2', rtxt)
                 rdata = json.loads(rtxt)
             except (Exception) as err:
                 self.l_error(fname,'Failed to convert json {0}: {1}'.format(rtxt,err), exc_info=True)
