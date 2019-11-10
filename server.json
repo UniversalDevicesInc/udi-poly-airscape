@@ -1,6 +1,7 @@
 {
     "name": "Airscape",
     "docs": "https://github.com/jimboca/udi-poly-airscape",
+    "forum": "https://forum.universal-devices.com/forum/134-polyglot-v2-airscape-nodeserver/"
     "type": "python3",
     "executable": "airscape-poly.py",
     "install": "install.sh",
