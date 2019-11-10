@@ -26,7 +26,7 @@ By default the 'Debug Level' on the Controller is set to Debug.  Please leave it
 
 ## Forum
 
-The Forum for discussing this nodeserver is [UDI Forum Polyglot V2 Airscape Nodeserver]https://forum.universal-devices.com/forum/134-polyglot-v2-airscape-nodeserver/
+The Forum for discussing this nodeserver is [UDI Forum Polyglot V2 Airscape Nodeserver](https://forum.universal-devices.com/forum/134-polyglot-v2-airscape-nodeserver/)
 
 ## Issues
 
