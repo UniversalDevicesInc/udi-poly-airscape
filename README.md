@@ -24,6 +24,10 @@ By default the 'Debug Level' on the Controller is set to Debug.  Please leave it
 - ISY Firmware running the latest 5.x Firmware
 - A machine running the [Polyglot V2](https://github.com/UniversalDevicesInc/polyglot-v2/blob/master/README.md)
 
+## Forum
+
+The Forum for discussing this nodeserver is [UDI Forum Polyglot V2 Airscape Nodeserver]https://forum.universal-devices.com/forum/134-polyglot-v2-airscape-nodeserver/
+
 ## Issues
 
 [Git Hub Issue Tracker](https://github.com/jimboca/udi-poly-airscape/issues)
