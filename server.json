@@ -10,6 +10,7 @@
     "notice": "Your disclaimer here",
     "shortPoll": "5",
     "longPoll": "600",
+    "profile_version": "2.0.7",
     "credits": [
         {
             "title": "airscape: A NodeServer for Airscape Fan Integration",

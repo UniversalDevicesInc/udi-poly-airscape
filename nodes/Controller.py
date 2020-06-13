@@ -15,7 +15,8 @@ class Controller(polyinterface.Controller):
         #self.poly.onConfig(self.process_config)
 
     def start(self):
-        LOGGER.info('Started Airscape NodeServer')
+        serverdata = self.poly.get_server_data()
+        LOGGER.info('Started Airscape NodeServer {}'.format(serverdata['version']))
         self.set_debug_mode()
         self.heartbeat()
         self.check_profile()
