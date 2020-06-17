@@ -118,7 +118,7 @@ class Airscape2(polyinterface.Node):
             return super(Airscape2, self).getDriver(driver)
 
     def setOn(self, command):
-        val = int(command.get('value'))
+        val = command.get('value')
         self.l_debug('setOn','val={}'.format(val))
 
     def setOff(self, command):
