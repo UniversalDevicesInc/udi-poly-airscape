@@ -117,7 +117,7 @@ class Airscape2(polyinterface.Node):
         else:
             return super(Airscape2, self).getDriver(driver)
 
-    def setSpeed(self, command):
+    def setOn(self, command):
         val = int(command.get('value'))
         self.l_debug('setOn','val={}'.format(val))
 
