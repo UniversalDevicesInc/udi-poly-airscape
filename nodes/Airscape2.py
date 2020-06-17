@@ -160,10 +160,10 @@ class Airscape2(polyinterface.Node):
             self.setOff('')
         elif 'fanspd' in self.status:
             while val > int(self.status['fanspd']):
-                self.speedUp(command)
+                self.speedUp({})
                 time.sleep(1)
             while val < int(self.status['fanspd']):
-                self.speedDown(command)
+                self.speedDown({})
                 time.sleep(1)
         else:
             self.l_error('setSpeed', 'Called before we know the current fanspd, that should not be possible')
