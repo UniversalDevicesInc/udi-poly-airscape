@@ -60,6 +60,7 @@
         <cmd id="FDDOWN" />
         <cmd id="FDUP" />
         <cmd id="DOF" />
+        <cnd id="DON" />
         <cmd id="ADD_HOUR" />
         <cmd id="SET_SPEED">
           <p id="" editor="SPEED" init="ST" />

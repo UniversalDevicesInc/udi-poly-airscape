@@ -34,6 +34,8 @@ The Forum for discussing this nodeserver is [UDI Forum Polyglot V2 Airscape Node
 
 ## Release Notes
 
+- 2.1.0: TBD
+  - Better fix for [Don't upload profile on every restart, add version checking](https://github.com/jimboca/udi-poly-airscape/issues/2)
 - 2.0.9: 11/09/2019
   - Always remove the server_response data since it may not be parseable, thanks @bbennett66 @BillB66
 - 2.0.8: 10/24/2019

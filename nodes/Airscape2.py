@@ -117,6 +117,10 @@ class Airscape2(polyinterface.Node):
         else:
             return super(Airscape2, self).getDriver(driver)
 
+    def setSpeed(self, command):
+        val = int(command.get('value'))
+        self.l_debug('setOn','val={}'.format(val))
+
     def setOff(self, command):
         # The data returned by fanspd is not good xml
         res = self.session.get('fanspd.cgi',{'dir': 4},parse="axml")
@@ -186,6 +190,7 @@ class Airscape2(polyinterface.Node):
         'FDUP': speedUp,
         'FDDOWN': speedDown,
         'DOF': setOff,
+        'DON' : setOn,
         'ADD_HOUR': addHour,
         'SET_SPEED' : setSpeed,
     }
