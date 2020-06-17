@@ -119,7 +119,7 @@ class Airscape2(polyinterface.Node):
 
     def setOn(self, command):
         val = command.get('value')
-        self.l_debug('setOn','val={}'.format(val))
+        self.l_info('setOn','val={}'.format(val))
         if val is None:
             val = 4
         else:
@@ -128,6 +128,7 @@ class Airscape2(polyinterface.Node):
         self._setSpeed(val)
 
     def setOff(self, command):
+        self.l_info('setOff','')
         # The data returned by fanspd is not good xml
         res = self.session.get('fanspd.cgi',{'dir': 4},parse="axml")
         self.set_from_response(res)
@@ -162,12 +163,13 @@ class Airscape2(polyinterface.Node):
         if val == 0:
             self.setOff('')
         elif 'fanspd' in self.status:
-            cspeed = int(self.status['fanspd'])
-            self.l_info("_setSpeed","current={} request={}".format(cspeed,val))
-            while val > cspeed:
+            cspeed =
+            while val > int(self.status['fanspd']):
+                self.l_info("_setSpeed","current={} request={}".format(int(self.status['fanspd']),val))
                 self.speedUp({})
                 time.sleep(1)
-            while val < cspeed:
+            while val < int(self.status['fanspd']):
+                self.l_info("_setSpeed","current={} request={}".format(int(self.status['fanspd']),val))
                 self.speedDown({})
                 time.sleep(1)
         else:
