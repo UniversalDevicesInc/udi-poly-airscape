@@ -6,8 +6,11 @@
   <editor id="I_DEBUG">
     <range uom="25" subset="8,9,10,20,30,40,50" nls="CDM"/>
   </editor>
+  <editor id="ONLEVEL">
+    <range uom="25" min="0" max="100" nls="OL"/>
+  </editor>
   <editor id="SPEED">
-    <range uom="56" subset="0-255" />
+    <range uom="56" min="0" max="255"/>
   </editor>
   <editor id="TIMEREM">
     <range uom="56" min="0" max="100000" />
