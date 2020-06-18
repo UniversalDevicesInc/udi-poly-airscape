@@ -125,7 +125,7 @@ class Airscape2(polyinterface.Node):
         else:
             # TODO: What are low/med/high values?
             val = int(val)
-        self._setSpeed(val)
+        #self._setSpeed(val)
 
     def setOff(self, command):
         self.l_info('setOff','')
