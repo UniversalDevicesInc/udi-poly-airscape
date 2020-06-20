@@ -33,10 +33,9 @@ class Airscape2(polyinterface.Node):
 
     def shortPoll(self):
         #if 'doorinprocess' in self.status and int(self.status['doorinprocess']) == 1:
-        self.l_debug('shortPoll', '...')
-        if not self.watching_door:
-            pass
-            #self.poll()
+        #self.l_debug('shortPoll', '...')
+        #if not self.watching_door:
+        #    self.poll()
 
     def longPoll(self):
         pass
@@ -127,7 +126,11 @@ class Airscape2(polyinterface.Node):
             # TODO: What are low/med/high values?
             val = int(val)
         #self._setSpeed(val)
-
+            {name: 'Off', maxSpeed: 0},
+            {name: 'Low', maxSpeed: 24}, // 1% - 24% / Low
+            {name: 'Medium', maxSpeed: 49}, // 25% - 49% / Medium
+            {name: 'MediumHigh', maxSpeed: 74}, // 50% - 74% / Medium-High
+            {name: 'High', maxSpeed: 100}, // 75-100% / High
     def setOff(self, command):
         self.l_info('setOff','')
         # The data returned by fanspd is not good xml
