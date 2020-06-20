@@ -122,16 +122,26 @@ class Airscape2(polyinterface.Node):
         val = command.get('value')
         self.l_info('setOn','val={}'.format(val))
         if val is None:
-            val = 4
+            speed = 4
         else:
-            # TODO: What are low/med/high values?
             val = int(val)
-        #self._setSpeed(val)
-            {name: 'Off', maxSpeed: 0},
-            {name: 'Low', maxSpeed: 24}, // 1% - 24% / Low
-            {name: 'Medium', maxSpeed: 49}, // 25% - 49% / Medium
-            {name: 'MediumHigh', maxSpeed: 74}, // 50% - 74% / Medium-High
-            {name: 'High', maxSpeed: 100}, // 75-100% / High
+            if val == 0:
+                self.setOff({})
+                return
+            elif val >= 75:
+                # High
+                speed = 10
+            elif val >= 50:
+                # MediumHigh
+                speed = 7
+            elif val >= 25:
+                # Medium
+                speed = 4
+            else:
+                # Low
+                speed = 2
+        self.setSpeed(speed)
+
     def setOff(self, command):
         self.l_info('setOff','')
         # The data returned by fanspd is not good xml
@@ -155,11 +165,7 @@ class Airscape2(polyinterface.Node):
         res = self.session.get('fanspd.cgi',{'dir': 2},parse="axml")
         self.set_from_response(res)
 
-    def setSpeed(self, command):
-        val = int(command.get('value'))
-        self._setSpeed(val)
-
-    def _setSpeed(self,val):
+    def setSpeed(self,val):
         self.l_info('setSpeed','{}'.format(val))
         if not self.do_poll:
             self.l_debug('setSpeed', 'waiting for startup to complete')
