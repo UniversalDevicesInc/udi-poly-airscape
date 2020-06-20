@@ -35,7 +35,7 @@ class Airscape2(polyinterface.Node):
         #if 'doorinprocess' in self.status and int(self.status['doorinprocess']) == 1:
         self.l_debug('shortPoll', '...')
         if not self.watching_door:
-            pass:
+            pass
             #self.poll()
 
     def longPoll(self):
