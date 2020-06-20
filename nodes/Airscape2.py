@@ -208,3 +208,26 @@ class Airscape2(polyinterface.Node):
         'DON' : setOn,
         'ADD_HOUR': addHour,
     }
+    """
+    Used 4.16.x.x because Benoit said this for the portal:
+        GH will use these settings to set/read the fan speeds.
+        const fanSpeedsDef = {
+          // This is for fanlinc (Insteon, type 1.x.x.x)
+          255: [
+            {name: 'Off', maxSpeed: 0},
+            {name: 'Low', maxSpeed: 127}, // 1% - 49% / Low
+            {name: 'Medium', maxSpeed: 253}, // 50% - 99% / Medium
+            {name: 'High', maxSpeed: 255}, // 100% / High
+          ],
+          // This is for fans using ZWave (type 4.16.x.x)
+          100: [
+            {name: 'Off', maxSpeed: 0},
+            {name: 'Low', maxSpeed: 24}, // 1% - 24% / Low
+            {name: 'Medium', maxSpeed: 49}, // 25% - 49% / Medium
+            {name: 'MediumHigh', maxSpeed: 74}, // 50% - 74% / Medium-High
+            {name: 'High', maxSpeed: 100}, // 75-100% / High
+          ],
+        };
+    Hints See: https://github.com/UniversalDevicesInc/hints
+    """
+    hint = [4,16,9,1]
