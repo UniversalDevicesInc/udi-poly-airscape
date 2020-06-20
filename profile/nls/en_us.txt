@@ -34,3 +34,21 @@ CMD-as2-ADD_HOUR-NAME = Add Hour
 CMD-as2-SET_SPEED-NAME = Set Speed
 CMD-as2-FDUP-NAME = Speed Up
 CMD-as2-FDDOWN-NAME = Speed Down
+
+SPD-0: Off
+SPD-24: Low
+SPD-49: Medium
+SPD-74: Medium-High
+SPD-100: High
+
+SPD-0: Off
+SPD-10: One
+SPD-20: Two
+SPD-30: Three
+SPD-40: Four
+SPD-50: Five
+SPD-60: Six
+SPD-70: Seven
+SPD-80: Eight
+SPD-90: Nine
+SPD-100: Ten

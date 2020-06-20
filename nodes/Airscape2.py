@@ -32,11 +32,9 @@ class Airscape2(polyinterface.Node):
         self.do_poll = True
 
     def shortPoll(self):
-        pass
-        #if 'doorinprocess' in self.status and int(self.status['doorinprocess']) == 1:
-        #self.l_debug('shortPoll', '...')
-        #if not self.watching_door:
-        #    self.poll()
+        self.l_debug('shortPoll', '...')
+        if not self.watching_door:
+            self.poll()
 
     def longPoll(self):
         pass
@@ -73,10 +71,14 @@ class Airscape2(polyinterface.Node):
             for key, value in self.all_xref.items():
                 if key in rdata:
                     rdata[value] = rdata[key]
-            for key, value in self.all_dinfo.items():
+            for key, driver in self.all_dinfo.items():
                 if key in rdata:
                     self.status[key] = rdata[key]
-                    self.setDriver(value,rdata[key])
+                    if key == 'fanspd':
+                        dval = int(rdata[key]) * 10
+                    else:
+                        dval = rdata[key]
+                    self.setDriver(driver,dval)
             # Wait for the door if we are not watching it already
             if not self.watching_door:
                 self.watch_door()
@@ -128,18 +130,40 @@ class Airscape2(polyinterface.Node):
             if val == 0:
                 self.setOff({})
                 return
-            elif val >= 75:
+            elif val >= 90:
                 # High
-                speed = 10
-            elif val >= 50:
+                speed = 100
+            elif val >= 90:
                 # MediumHigh
-                speed = 7
-            elif val >= 25:
+                speed = 90
+            elif val >= 80:
                 # Medium
-                speed = 3
-            else:
+                speed = 80
+            elif val >= 70:
+                # Medium
+                speed = 70
+            elif val >= 60:
+                # Medium
+                speed = 60
+            elif val >= 50:
+                # Medium
+                speed = 50
+            elif val >= 40:
+                # Medium
+                speed = 40
+            elif val >= 30:
+                # Medium
+                speed = 30
+            elif val >= 20:
+                # Medium
+                speed = 20
+            elif val >= 10:
                 # Low
-                speed = 1
+                speed = 10
+            else:
+                val = 0
+                self.setOff()
+                return
         self.setSpeed(speed)
 
     def setOff(self, command):
