@@ -130,40 +130,36 @@ class Airscape2(polyinterface.Node):
             if val == 0:
                 self.setOff({})
                 return
-            elif val >= 90:
+            elif val > 90:
                 # High
-                speed = 100
-            elif val >= 90:
-                # MediumHigh
-                speed = 90
-            elif val >= 80:
-                # Medium
-                speed = 80
-            elif val >= 70:
-                # Medium
-                speed = 70
-            elif val >= 60:
-                # Medium
-                speed = 60
-            elif val >= 50:
-                # Medium
-                speed = 50
-            elif val >= 40:
-                # Medium
-                speed = 40
-            elif val >= 30:
-                # Medium
-                speed = 30
-            elif val >= 20:
-                # Medium
-                speed = 20
-            elif val >= 10:
-                # Low
                 speed = 10
-            else:
-                val = 0
-                self.setOff()
-                return
+            elif val > 80:
+                # MediumHigh
+                speed = 9
+            elif val > 80:
+                # Medium
+                speed = 8
+            elif val > 60:
+                # Medium
+                speed = 7
+            elif val > 50:
+                # Medium
+                speed = 6
+            elif val > 40:
+                # Medium
+                speed = 5
+            elif val > 30:
+                # Medium
+                speed = 4
+            elif val > 20:
+                # Medium
+                speed = 3
+            elif val > 10:
+                # Medium
+                speed = 2
+            elif val > 0:
+                # Low
+                speed = 1
         self.setSpeed(speed)
 
     def setOff(self, command):
