@@ -7,7 +7,7 @@
     <range uom="25" subset="8,9,10,20,30,40,50" nls="CDM"/>
   </editor>
   <editor id="SPEED">
-    <range uom="25" subset="0,24,49,74,100" nls="SPD"/>
+    <range uom="25" subset="0,10,20,30,40,50,60,70,80,90,100" nls="SPD"/>
   </editor>
   <editor id="TIMEREM">
     <range uom="56" min="0" max="100000" />

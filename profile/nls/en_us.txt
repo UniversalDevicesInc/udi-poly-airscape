@@ -36,12 +36,6 @@ CMD-as2-FDUP-NAME = Speed Up
 CMD-as2-FDDOWN-NAME = Speed Down
 
 SPD-0: Off
-SPD-24: Low
-SPD-49: Medium
-SPD-74: Medium-High
-SPD-100: High
-
-SPD-0: Off
 SPD-10: One
 SPD-20: Two
 SPD-30: Three
