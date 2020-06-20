@@ -152,10 +152,10 @@ class Airscape2(polyinterface.Node):
 
     def setSpeed(self, command):
         val = int(command.get('value'))
-        self.l_info('setSpeed','{}'.format(val))
         self._setSpeed(val)
 
     def _setSpeed(self,val):
+        self.l_info('setSpeed','{}'.format(val))
         if not self.do_poll:
             self.l_debug('setSpeed', 'waiting for startup to complete')
             while not self.do_poll:
@@ -207,5 +207,4 @@ class Airscape2(polyinterface.Node):
         'DOF': setOff,
         'DON' : setOn,
         'ADD_HOUR': addHour,
-        'SET_SPEED' : setSpeed,
     }
