@@ -136,10 +136,10 @@ class Airscape2(polyinterface.Node):
                 speed = 7
             elif val >= 25:
                 # Medium
-                speed = 4
+                speed = 3
             else:
                 # Low
-                speed = 2
+                speed = 1
         self.setSpeed(speed)
 
     def setOff(self, command):
