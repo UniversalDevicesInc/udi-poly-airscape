@@ -34,7 +34,7 @@ CMD-as2-ADD_HOUR-NAME = Add Hour
 CMD-as2-SET_SPEED-NAME = Set Speed
 CMD-as2-FDUP-NAME = Speed Up
 CMD-as2-FDDOWN-NAME = Speed Down
-CMD-as2-ON = Set
+CMD-as2-DON-NAME = Set
 
 SPD-0 = Off
 SPD-10 = One
