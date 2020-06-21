@@ -218,7 +218,7 @@ class Airscape2(polyinterface.Node):
         if val == 0:
             self.setOff('')
         elif 'fanspd' in self.status:
-            TODO: Query fan if fanspd is not yet known...
+            # TODO: Query fan if fanspd is not yet known...
             while val > int(self.status['fanspd']):
                 self.l_info("_setSpeed","current={} request={}".format(int(self.status['fanspd']),val))
                 self.speedUp({})
