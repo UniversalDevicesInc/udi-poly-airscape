@@ -82,7 +82,7 @@ class Airscape2(polyinterface.Node):
                 if key in rdata:
                     self.status[key] = rdata[key]
                     if key == 'fanspd':
-                        dval = int(rdata[key]) * 10
+                        dval = int(rdata[key]) * 1 # *10 if zwave
                     else:
                         dval = rdata[key]
                     self.setDriver(driver,dval)
