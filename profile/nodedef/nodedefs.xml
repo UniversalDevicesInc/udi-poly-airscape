@@ -29,7 +29,7 @@
       <!-- Online -->
       <st id="GV1"  editor="bool"  />
       <!-- Speed -->
-      <st id="ST" editor="SPEED" />
+      <st id="ST" editor="SPEEDI" />
       <!--  attic_temp -->
       <st id="CLITEMP" editor="I_TEMP_F" />
       <!-- doorinprocess  -->

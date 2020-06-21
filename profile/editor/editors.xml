@@ -6,8 +6,13 @@
   <editor id="I_DEBUG">
     <range uom="25" subset="8,9,10,20,30,40,50" nls="CDM"/>
   </editor>
-  <editor id="SPEED">
+  <!-- When using Insteon Z-Wave we use these values -->
+  <editor id="SPEEDZ">
     <range uom="25" subset="0,10,20,30,40,50,60,70,80,90,100" nls="SPD"/>
+  </editor>
+  <!-- When using Insteon values we just convert ot 0-10 internally -->
+  <editor id="SPEEDI">
+    <range uom="56" subset="0-10" />
   </editor>
   <editor id="TIMEREM">
     <range uom="56" min="0" max="100000" />

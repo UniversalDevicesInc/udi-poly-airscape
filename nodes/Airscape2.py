@@ -120,7 +120,31 @@ class Airscape2(polyinterface.Node):
         else:
             return super(Airscape2, self).getDriver(driver)
 
-    def setOn(self, command):
+    def setOnI(self, command):
+        val = command.get('value')
+        self.l_info('setOn','val={}'.format(val))
+        if val is None:
+            speed = 5 # Medium
+        else:
+            val = int(val)
+            if val == 0:
+                self.setOff({})
+                return
+            elif val == 255:
+                # Insteon High
+                speed = 10
+            elif val == 253:
+                # Inston Medium
+                speed = 5
+            elif val == 127:
+                # Insteon Medium
+                speed = 3
+            elif val > 10:
+                self.l_error('setOn','Illegal value {}'.format(val))
+                return
+        self.setSpeed(speed)
+
+    def setOnZW(self, command):
         val = command.get('value')
         self.l_info('setOn','val={}'.format(val))
         if val is None:
@@ -194,6 +218,7 @@ class Airscape2(polyinterface.Node):
         if val == 0:
             self.setOff('')
         elif 'fanspd' in self.status:
+            TODO: Query fan if fanspd is not yet known...
             while val > int(self.status['fanspd']):
                 self.l_info("_setSpeed","current={} request={}".format(int(self.status['fanspd']),val))
                 self.speedUp({})
@@ -236,7 +261,7 @@ class Airscape2(polyinterface.Node):
         'FDUP': speedUp,
         'FDDOWN': speedDown,
         'DOF': setOff,
-        'DON' : setOn,
+        'DON' : setOnI,
         'ADD_HOUR': addHour,
     }
     """
