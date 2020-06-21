@@ -43,6 +43,13 @@ class Airscape2(polyinterface.Node):
         res = self.session.get('status.json.cgi',{},parse="json")
         self.set_from_response(res)
 
+    def wait_for_response(self):
+        # Poll until we have a status
+        while not (self.st):
+            self.poll()
+                self.l_debug("wait_for_response","")
+                time.sleep(1)
+
     # XREF from airscape to drivers
     all_dinfo = {
         'fanspd': 'ST',
@@ -217,18 +224,20 @@ class Airscape2(polyinterface.Node):
                 time.sleep(1)
         if val == 0:
             self.setOff('')
-        elif 'fanspd' in self.status:
-            # TODO: Query fan if fanspd is not yet known...
-            while val > int(self.status['fanspd']):
-                self.l_info("_setSpeed","current={} request={}".format(int(self.status['fanspd']),val))
-                self.speedUp({})
-                time.sleep(1)
-            while val < int(self.status['fanspd']):
-                self.l_info("_setSpeed","current={} request={}".format(int(self.status['fanspd']),val))
-                self.speedDown({})
-                time.sleep(1)
         else:
-            self.l_error('setSpeed', 'Called before we know the current fanspd, that should not be possible')
+            self.wait_for_response()
+            if 'fanspd' in self.status:
+                while val > int(self.status['fanspd']):
+                    self.l_info("_setSpeed","current={} request={}".format(int(self.status['fanspd']),val))
+                    self.speedUp({})
+                    time.sleep(1)
+                while val < int(self.status['fanspd']):
+                    self.l_info("_setSpeed","current={} request={}".format(int(self.status['fanspd']),val))
+                    self.speedDown({})
+                    time.sleep(1)
+                self.l_info("_setSpeed","current={} request={}".format(int(self.status['fanspd']),val))
+            else:
+                self.l_error('setSpeed', 'Called before we know the current fanspd, that should not be possible')
 
     def l_info(self, name, string):
         LOGGER.info("%s:%s:%s: %s" %  (self.id,self.name,name,string))
