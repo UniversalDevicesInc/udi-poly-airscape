@@ -29,7 +29,7 @@
       <!-- Online -->
       <st id="GV1"  editor="bool"  />
       <!-- Speed -->
-      <st id="ST" editor="SPEEDI" />
+      <st id="ST" editor="SPEEDZ" />
       <!--  attic_temp -->
       <st id="CLITEMP" editor="I_TEMP_F" />
       <!-- doorinprocess  -->
@@ -62,7 +62,7 @@
         <cmd id="DOF" />
         <cmd id="ADD_HOUR" />
         <cmd id="DON">
-          <p id="" editor="SPEED" init="ST" />
+          <p id="" editor="SPEEDZ" init="ST" />
         </cmd>
       </accepts>
     </cmds>

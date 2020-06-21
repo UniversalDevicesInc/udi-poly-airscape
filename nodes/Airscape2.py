@@ -82,7 +82,7 @@ class Airscape2(polyinterface.Node):
                 if key in rdata:
                     self.status[key] = rdata[key]
                     if key == 'fanspd':
-                        dval = int(rdata[key]) * 1 # *10 if zwave
+                        dval = int(rdata[key]) * 10 # *10 if zwave and 1 if Insteon
                     else:
                         dval = rdata[key]
                     self.setDriver(driver,dval)
@@ -270,11 +270,11 @@ class Airscape2(polyinterface.Node):
         'FDUP': speedUp,
         'FDDOWN': speedDown,
         'DOF': setOff,
-        'DON' : setOnI,
+        'DON' : setOnZW,
         'ADD_HOUR': addHour,
     }
     """
-    Used 4.16.x.x because Benoit said this for the portal:
+    Used 4.17.x.x because Benoit said this for the portal:
         GH will use these settings to set/read the fan speeds.
         const fanSpeedsDef = {
           // This is for fanlinc (Insteon, type 1.x.x.x)
@@ -295,4 +295,4 @@ class Airscape2(polyinterface.Node):
         };
     Hints See: https://github.com/UniversalDevicesInc/hints
     """
-    hint = [4,16,9,1]
+    hint = [4,17,9,1]
