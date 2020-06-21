@@ -46,9 +46,9 @@ class Airscape2(polyinterface.Node):
     def wait_for_response(self):
         # Poll until we have a status
         while not (self.st):
+            self.l_debug("wait_for_response","")
             self.poll()
-                self.l_debug("wait_for_response","")
-                time.sleep(1)
+            time.sleep(1)
 
     # XREF from airscape to drivers
     all_dinfo = {
