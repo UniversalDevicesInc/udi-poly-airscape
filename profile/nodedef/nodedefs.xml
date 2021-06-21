@@ -26,10 +26,10 @@
   <nodeDef id="airscape2_F" nls="as2">
     <editors />
     <sts>
-      <!-- Online -->
-      <st id="GV1"  editor="bool"  />
       <!-- Speed -->
       <st id="ST" editor="SPEEDZ" />
+      <!-- Online -->
+      <st id="GV1"  editor="bool"  />
       <!--  attic_temp -->
       <st id="CLITEMP" editor="I_TEMP_F" />
       <!-- doorinprocess  -->
