@@ -34,9 +34,9 @@ The Forum for discussing this nodeserver is [UDI Forum Polyglot V2 Airscape Node
 
 ## Release Notes
 
-- 2.1.0: TBD
+- 2.1.0: 06/20/2021
   - Better fix for [Don't upload profile on every restart, add version checking](https://github.com/jimboca/udi-poly-airscape/issues/2)
-  - Changes to support GH and Alexa, add it as a Fan.  (Not quite working yet, currently looks like an Insteon, want it to look like a Zwave 2ith 4 speeds)
+  - Changes to support GH and Alexa, add it as a Fan.  Looks like a 5 speed fan, that's the best we have for now.
 - 2.0.9: 11/09/2019
   - Always remove the server_response data since it may not be parseable, thanks @bbennett66 @BillB66
 - 2.0.8: 10/24/2019
