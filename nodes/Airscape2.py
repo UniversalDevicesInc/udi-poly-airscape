@@ -252,7 +252,7 @@ class Airscape2(polyinterface.Node):
         LOGGER.debug("%s:%s:%s: %s" % (self.id,self.name,name,string))
 
     drivers = [
-        {'driver': 'ST',  'value': 0, 'uom': 56}, # speed
+        {'driver': 'ST',  'value': 0, 'uom': 25}, # speed
         {'driver': 'CLITEMP', 'value': 0, 'uom': 17}, # attic_temp
         {'driver': 'TIMEREM', 'value': 0, 'uom': 56}, # minutes
         {'driver': 'CPW', 'value': 0, 'uom': 73}, # watt?
