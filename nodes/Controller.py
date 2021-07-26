@@ -1,5 +1,5 @@
 
-import polyinterface
+from udi_interface import Node
 import logging
 from copy import deepcopy
 from nodes import Airscape2
@@ -7,20 +7,22 @@ from node_funcs import *
 
 LOGGER = polyinterface.LOGGER
 
-class Controller(polyinterface.Controller):
+class Controller(Node):
     def __init__(self, polyglot):
         super(Controller, self).__init__(polyglot)
-        self.name = 'Airscape Controller'
+        #self.name = 'Airscape Controller'
         self.hb = 0
-        #self.poly.onConfig(self.process_config)
+        polyglot.subscribe(polyglot.START, self.start, address) 
 
     def start(self):
         serverdata = self.poly.get_server_data()
+        #LOGGER.info('Started Airscape NodeServer {}'.format(serverdata['version']))
         LOGGER.info('Started Airscape NodeServer {}'.format(serverdata['version']))
-        self.set_debug_mode()
+        # Remove all existing notices
+        self.removeNoticesAll()
         self.heartbeat()
         self.check_profile()
-        self.check_params()
+        self.set_params()
         self.discover("")
 
     def shortPoll(self):
@@ -69,7 +71,7 @@ class Controller(polyinterface.Controller):
             return None
         return typedConfig.get(name)
 
-    def check_params(self):
+    def set_params(self):
         params = [
             {
                 'name': 'airscape2',
@@ -90,11 +92,10 @@ class Controller(polyinterface.Controller):
                 ]
             },
         ]
-        self.poly.save_typed_params(params)
+        self.TypedParams.config = typedParams
+        polyglot.subscribe(polyglot.CUSTOMDATA, self.check_params, address)
 
-        # Remove all existing notices
-        self.removeNoticesAll()
-
+    def check_params():
         self.airscape2 = self.get_typed_name('airscape2')
         if self.airscape2 is None or len(self.airscape2) == 0:
             self.addNotice('Please add a Airscape 2 Fan in the configuration page','config')

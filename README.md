@@ -1,6 +1,6 @@
 # Airscape NodeServer
 
-This is a Polyglot V2 Nodeserver for the ISY 994i to control [Airscape Whole House Fans](https://airscapefans.com/) using the [Gen 2 Controls API](https://blog.airscapefans.com/archives/gen-2-controls-api).  If you don't already own one of these awesome fans, you can not purchase the Gen 2 controller online, you have to call them.
+This is a Polyglot V3 Nodeserver for the ISY 994i to control [Airscape Whole House Fans](https://airscapefans.com/) using the [Gen 2 Controls API](https://blog.airscapefans.com/archives/gen-2-controls-api).  If you don't already own one of these awesome fans, you can not purchase the Gen 2 controller online, you have to call them.
 
 ## Information
 
@@ -22,7 +22,7 @@ By default the 'Debug Level' on the Controller is set to Debug.  Please leave it
 ## Requirements
 
 - ISY Firmware running the latest 5.x Firmware
-- A machine running the [Polyglot V2](https://github.com/UniversalDevicesInc/polyglot-v2/blob/master/README.md)
+- A Polisy running the [Polyglot V3](https://github.com/UniversalDevicesInc/polyglot-v3/blob/master/README.md)
 
 ## Forum
 
@@ -30,10 +30,12 @@ The Forum for discussing this nodeserver is [UDI Forum Polyglot V2 Airscape Node
 
 ## Issues
 
-[Git Hub Issue Tracker](https://github.com/jimboca/udi-poly-airscape/issues)
+[Git Hub Issue Tracker](https://github.com/UniversalDevicesInc/udi-poly-airscape/issues)
 
 ## Release Notes
 
+- 3.x.x: TBD
+  - Covnert to PG3
 - 2.1.0: 06/20/2021
   - Better fix for [Don't upload profile on every restart, add version checking](https://github.com/jimboca/udi-poly-airscape/issues/2)
   - Changes to support GH and Alexa, add it as a Fan.  Looks like a 5 speed fan, that's the best we have for now.
