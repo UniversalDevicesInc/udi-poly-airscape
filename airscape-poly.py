@@ -10,7 +10,7 @@ LOGGER = udi_interface.LOGGER
 if __name__ == "__main__":
     try:
         polyglot = udi_interface.Interface([Controller])
-        polyglot = polyinterface.Interface('Airscape')
+        polyglot = polyinterface.Interface('Airscape Controller')
         polyglot.start()
         control = Controller(polyglot, 'controller', 'controller', 'Airscape')
         control.runForever()

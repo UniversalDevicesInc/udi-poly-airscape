@@ -6,11 +6,9 @@
 # TODO:
 # - Nothing
 #
-import polyinterface
+from udi_interface import Node,LOGGER
 import time
 from pgSession import pgSession
-
-LOGGER = polyinterface.LOGGER
 
 class Airscape2(polyinterface.Node):
 
@@ -18,6 +16,7 @@ class Airscape2(polyinterface.Node):
         super(Airscape2, self).__init__(controller, primary, address, name)
         self.config_data = config_data
         self.debug_level = 1
+        # TODO: Subscribe to let short poll heppen and remove call from controller node
         self.do_poll = False # Don't let shortPoll happen during initialiation
         self.watching_door = False
         self.status = {}

@@ -1,39 +1,57 @@
 
-from udi_interface import Node
+from udi_interface import Node,LOGGER
 import logging
 from copy import deepcopy
 from nodes import Airscape2
 from node_funcs import *
 
-LOGGER = polyinterface.LOGGER
-
 class Controller(Node):
-    def __init__(self, polyglot):
+    def __init__(self, poly, primary, address, name):
         super(Controller, self).__init__(polyglot)
-        #self.name = 'Airscape Controller'
         self.hb = 0
-        polyglot.subscribe(polyglot.START, self.start, address) 
+    	self.Notices = Custom(poly, 'notices')
+    	self.Data    = Custom(poly, 'customdata')
+        self.Parameters      = Custom(polyglot, 'customparams')
+        self.Notices         = Custom(polyglot, 'notices')
+        self.TypedParameters = Custom(polyglot, 'customtypedparams')
+        poly.subscribe(poly.START, self.handler_start, address) 
+        poly.subscribe(poly.POLL, self.handler_poll)
+        poly.subscribe(poly.ADDNODEDONE, self.handler_add_node_done)
+        poly.subscribe(poly.CUSTOMTYPEDPARAMS, self.handler_custom_typed_params)
+        poly.subscribe(poly.LOGLEVEL, self.handler_log_level)
+        #TODO: Doesn't seem to be implemented yet?
+        #poly.addLevelName('Debug + Session Verbose',8)
+        #poly.addLevelName('Debug + Session',9)
+        poly.ready()
+        poly.addNode(self)
 
-    def start(self):
+    def handler_start(self):
         serverdata = self.poly.get_server_data()
-        #LOGGER.info('Started Airscape NodeServer {}'.format(serverdata['version']))
-        LOGGER.info('Started Airscape NodeServer {}'.format(serverdata['version']))
-        # Remove all existing notices
-        self.removeNoticesAll()
+        LOGGER.info(f'Started Airscape NodeServer {serverdata['version']}')'
+        self.Notices.clear()
         self.heartbeat()
         self.check_profile()
         self.set_params()
         self.discover("")
 
-    def shortPoll(self):
-        for node in self.nodes:
-            if self.nodes[node].address != self.address and self.nodes[node].do_poll:
-                self.nodes[node].shortPoll()
+    def handler_add_node_done(self, node):
+        LOGGER.debug(f'node added {node.address} = {node.name}')
 
-    def longPoll(self):
+    def handler_poll(self, polltype):
+        if polltype == 'shortPoll':
+            self.short_poll()
+        else:
+            self.long_poll()
+
+    def short_poll(self):
         for node in self.nodes:
             if self.nodes[node].address != self.address and self.nodes[node].do_poll:
-                self.nodes[node].longPoll()
+                self.nodes[node].short_poll()
+
+    def long_poll(self):
+        for node in self.nodes:
+            if self.nodes[node].address != self.address and self.nodes[node].do_poll:
+                self.nodes[node].long_poll()
         self.heartbeat()
 
     def query(self):
@@ -45,7 +63,7 @@ class Controller(Node):
 
     def discover(self, command):
         if self.airscape2 is None or len(self.airscape2) == 0:
-            self.l_info('discover','No Airscape 2 Entries in config: {}'.format(self.airscape2))
+            LOGGER.info(f'No Airscape 2 Entries in config: {self.airscape2}')
             return
         for a2 in self.airscape2:
             self.addNode(Airscape2(self, self.address, get_valid_node_name(a2['name']), 'Airscape {}'.format(a2['name']), a2))
@@ -72,67 +90,47 @@ class Controller(Node):
         return typedConfig.get(name)
 
     def set_params(self):
-        params = [
-            {
-                'name': 'airscape2',
-                'title': 'Airscape 2',
-                'desc': 'Airscape 2nd Generation Controller',
-                'isList': True,
-                'params': [
-                    {
-                        'name': 'name',
-                        'title': "Name",
-                        'isRequired': True,
-                    },
-                    {
-                        'name': 'host',
-                        'title': 'Host Name or IP Address',
-                        'isRequired': True
-                    },
-                ]
-            },
-        ]
+        self.TypedParameters.load( 
+            [
+                {
+                    'name': 'airscape2',
+                    'title': 'Airscape 2',
+                    'desc': 'Airscape 2nd Generation Controller',
+                    'isList': True,
+                    'params': [
+                        {
+                            'name': 'name',
+                            'title': "Name",
+                            'isRequired': True,
+                        },
+                        {
+                            'name': 'host',
+                            'title': 'Host Name or IP Address',
+                            'isRequired': True
+                        },
+                    ]
+                },
+            ], True)
         self.TypedParams.config = typedParams
-        polyglot.subscribe(polyglot.CUSTOMDATA, self.check_params, address)
 
-    def check_params():
-        self.airscape2 = self.get_typed_name('airscape2')
+    def handler_custom_typed_params():
+        self.TypedParameters.load(params)
+        self.airscape2 = self.TypedParmameters['airscape2']
         if self.airscape2 is None or len(self.airscape2) == 0:
             self.addNotice('Please add a Airscape 2 Fan in the configuration page','config')
-
-    def remove_notice_config(self,command):
-        self.removeNotice('config')
-
-    def check_profile(self):
-        self.profile_info = get_profile_info(LOGGER)
-        cdata = deepcopy(self.polyConfig['customData'])
-        self.l_info('check_profile','profile_info={}'.format(self.profile_info))
-        self.l_info('check_profile','  customData={}'.format(cdata))
-        if not 'profile_info' in cdata:
-            self.l_info('check_profile','Updated needed since it has never been recorded.')
-            update_profile = True
-        elif self.profile_info['version'] == cdata['profile_info']['version']:
-            self.l_info('check_profile','No updated needed: "{}" == "{}"'.format(self.profile_info['version'],cdata['profile_info']['version']))
-            update_profile = False
-        else:
-            self.l_info('check_profile','Udated needed: "{}" != "{}"'.format(self.profile_info['version'],cdata['profile_info']['version']))
-            update_profile = True
-        if update_profile:
-            self.update_profile("")
-            cdata['profile_info'] = self.profile_info
-            self.saveCustomData(cdata)
 
     def update_profile(self,command):
         LOGGER.info('update_profile:')
         st = self.poly.installprofile()
         return st
 
-    def set_all_logs(self,level):
-        self.l_info("set_all_logs",level)
-        LOGGER.setLevel(level)
+    def handler_log_level(self,level):
+        LOGGER(f'level=level')
+        #LOGGER.setLevel(level)
         #logging.getLogger('requests').setLevel(level)
         #logging.getLogger('urllib3').setLevel(level)
 
+    # TODO: Add levels 8 & 9 to config
     def set_debug_mode(self,level=None):
         self.l_info("set_debug_mode",level)
         mdrv = 'GV1'
@@ -169,31 +167,12 @@ class Controller(Node):
             self.l_error("set_debug_mode","Unknown level {0}".format(level))
         self.l_info("set_debug_mode"," session debug_level={}".format(self.debug_level))
 
-    def l_info(self, name, string):
-        LOGGER.info("%s:%s: %s" %  (self.id,name,string))
-
-    def l_error(self, name, string):
-        LOGGER.error("%s:%s: %s" % (self.id,name,string))
-
-    def l_warning(self, name, string):
-        LOGGER.warning("%s:%s: %s" % (self.id,name,string))
-
-    def l_debug(self, name, string):
-        LOGGER.debug("%s:%s: %s" % (self.id,name,string))
-
-    def cmd_debug_mode(self,command):
-        val = int(command.get('value'))
-        self.l_info("cmd_debug_mode",val)
-        self.set_debug_mode(val)
-
     id = 'controller'
     commands = {
         'QUERY': query,
         'DISCOVER': discover,
         'UPDATE_PROFILE': update_profile,
-        'DEBUG': cmd_debug_mode,
     }
     drivers = [
         {'driver': 'ST', 'value': 1, 'uom': 2},
-        {'driver': 'GV1', 'value': 10, 'uom': 25}
     ]
