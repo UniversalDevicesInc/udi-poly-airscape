@@ -44,7 +44,8 @@ class Controller(Node):
             self.long_poll()
 
     def short_poll(self):
-        for node in self.nodes:
+        nodes = self.poly.getNodes()
+        for id,node in self.poly.getNodes():
             if self.nodes[node].address != self.address and self.nodes[node].do_poll:
                 self.nodes[node].short_poll()
 

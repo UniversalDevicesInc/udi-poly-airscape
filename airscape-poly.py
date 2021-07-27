@@ -11,6 +11,6 @@ if __name__ == "__main__":
         polyglot = Interface([Controller])
         polyglot.start()
         control = Controller(polyglot, 'controller', 'controller', 'Airscape')
-        control.runForever()
+        polyglot.runForever()
     except (KeyboardInterrupt, SystemExit):
         sys.exit(0)
