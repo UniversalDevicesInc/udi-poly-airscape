@@ -1,5 +1,5 @@
 
-from udi_interface import Node,LOGGER
+from udi_interface import Node,LOGGER,Custom
 import logging
 from copy import deepcopy
 from nodes import Airscape2
