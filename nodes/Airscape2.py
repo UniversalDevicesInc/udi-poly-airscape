@@ -10,7 +10,7 @@ from udi_interface import Node,LOGGER
 import time
 from pgSession import pgSession
 
-class Airscape2(polyinterface.Node):
+class Airscape2(Node):
 
     def __init__(self, controller, primary, address, name, config_data):
         super(Airscape2, self).__init__(controller, primary, address, name)
