@@ -126,7 +126,7 @@ class Controller(Node):
         return st
 
     def handler_log_level(self,level):
-        LOGGER(f'level=level')
+        LOGGER.debug(f'level=level')
         #LOGGER.setLevel(level)
         #logging.getLogger('requests').setLevel(level)
         #logging.getLogger('urllib3').setLevel(level)
