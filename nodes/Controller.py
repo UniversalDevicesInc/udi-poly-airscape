@@ -26,8 +26,8 @@ class Controller(Node):
         poly.addNode(self)
 
     def handler_start(self):
-        serverdata = self.poly._get_server_data()
-        LOGGER.info(f"Started Airscape NodeServer {serverdata['version']}")
+        #serverdata = self.poly._get_server_data()
+        LOGGER.info(f"Started Airscape NodeServer {self.poly.serverdata['version']}")
         self.Notices.clear()
         self.heartbeat()
         self.check_profile()
