@@ -11,9 +11,9 @@ class Controller(Node):
         self.hb = 0
         self.Notices = Custom(poly, 'notices')
         self.Data    = Custom(poly, 'customdata')
-        self.Parameters      = Custom(polyglot, 'customparams')
-        self.Notices         = Custom(polyglot, 'notices')
-        self.TypedParameters = Custom(polyglot, 'customtypedparams')
+        self.Parameters      = Custom(poly, 'customparams')
+        self.Notices         = Custom(poly, 'notices')
+        self.TypedParameters = Custom(poly, 'customtypedparams')
         poly.subscribe(poly.START, self.handler_start, address) 
         poly.subscribe(poly.POLL, self.handler_poll)
         poly.subscribe(poly.ADDNODEDONE, self.handler_add_node_done)
