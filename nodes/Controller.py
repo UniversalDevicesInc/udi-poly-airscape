@@ -30,7 +30,6 @@ class Controller(Node):
         LOGGER.info(f"Started Airscape NodeServer {self.poly.serverdata['version']}")
         self.Notices.clear()
         self.heartbeat()
-        self.check_profile()
         self.set_params()
         self.discover("")
 
