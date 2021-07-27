@@ -4,6 +4,7 @@ This is a NodeServer for Airscape Fans for Polyglot v2 written in Python2/3
 """
 import udi_interfance
 from nodes import Controller
+import sys
 
 LOGGER = udi_interface.LOGGER
 
