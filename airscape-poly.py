@@ -2,16 +2,13 @@
 """
 This is a NodeServer for Airscape Fans for Polyglot v2 written in Python2/3
 """
-import udi_interface
+from udi_interface import Interface,LOGGER
 from nodes import Controller
 import sys
 
-LOGGER = udi_interface.LOGGER
-
 if __name__ == "__main__":
     try:
-        polyglot = udi_interface.Interface([Controller])
-        polyglot = polyinterface.Interface('Airscape Controller')
+        polyglot = Interface([Controller])
         polyglot.start()
         control = Controller(polyglot, 'controller', 'controller', 'Airscape')
         control.runForever()
