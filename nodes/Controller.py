@@ -9,8 +9,8 @@ class Controller(Node):
     def __init__(self, poly, primary, address, name):
         super(Controller, self).__init__(polyglot)
         self.hb = 0
-    	self.Notices = Custom(poly, 'notices')
-    	self.Data    = Custom(poly, 'customdata')
+        self.Notices = Custom(poly, 'notices')
+        self.Data    = Custom(poly, 'customdata')
         self.Parameters      = Custom(polyglot, 'customparams')
         self.Notices         = Custom(polyglot, 'notices')
         self.TypedParameters = Custom(polyglot, 'customtypedparams')
