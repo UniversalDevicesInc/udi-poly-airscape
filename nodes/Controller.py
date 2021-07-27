@@ -90,6 +90,7 @@ class Controller(Node):
         return typedConfig.get(name)
 
     def set_params(self):
+        return
         self.TypedParameters.load( 
             [
                 {
