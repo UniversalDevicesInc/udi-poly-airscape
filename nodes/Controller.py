@@ -114,7 +114,7 @@ class Controller(Node):
             ], True)
         self.TypedParams.config = typedParams
 
-    def handler_custom_typed_params():
+    def handler_custom_typed_params(self,flag):
         self.TypedParameters.load(params)
         self.airscape2 = self.TypedParmameters['airscape2']
         if self.airscape2 is None or len(self.airscape2) == 0:
