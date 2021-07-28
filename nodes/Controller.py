@@ -115,10 +115,10 @@ class Controller(Node):
                 },
             ], True)
 
-    def handler_typed_params(self,flag):
+    def handler_typed_params(self,params):
         return
 
-    def handler_typed_data(self,flag):
+    def handler_typed_data(self,params):
         LOGGER.debug('Loading typed data now')
         self.TypedData.load(params)
         LOGGER.debug(params)
