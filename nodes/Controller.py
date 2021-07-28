@@ -9,6 +9,7 @@ class Controller(Node):
     def __init__(self, poly, primary, address, name):
         super(Controller, self).__init__(poly, primary, address, name)
         self.hb = 0
+        self.airscape2 = None
         self.Notices = Custom(poly, 'notices')
         self.Data    = Custom(poly, 'customdata')
         self.Parameters      = Custom(poly, 'customparams')
