@@ -128,11 +128,6 @@ class Controller(Node):
         if self.airscape2 is None or len(self.airscape2) == 0:
             self.addNotice('Please add a Airscape 2 Fan in the configuration page','config')
 
-    def update_profile(self,command):
-        LOGGER.info('update_profile:')
-        st = self.poly.installprofile()
-        return st
-
     def handler_log_level(self,level):
         LOGGER.debug(f'level=level')
         #LOGGER.setLevel(level)
@@ -180,7 +175,6 @@ class Controller(Node):
     commands = {
         'QUERY': query,
         'DISCOVER': discover,
-        'UPDATE_PROFILE': update_profile,
     }
     drivers = [
         {'driver': 'ST', 'value': 1, 'uom': 2},
