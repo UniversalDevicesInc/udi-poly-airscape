@@ -34,7 +34,7 @@ class Controller(Node):
         self.discover("")
 
     def handler_add_node_done(self, node):
-        LOGGER.debug(f'node added {node.address} = {node.name}')
+        LOGGER.debug(f'node added {node}')
 
     def handler_poll(self, polltype):
         if polltype == 'shortPoll':
