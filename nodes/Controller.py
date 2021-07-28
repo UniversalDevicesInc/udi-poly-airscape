@@ -9,17 +9,19 @@ class Controller(Node):
     def __init__(self, poly, primary, address, name):
         super(Controller, self).__init__(poly, primary, address, name)
         self.hb = 0
-        self.airscape2 = None
-        self.Notices = Custom(poly, 'notices')
-        self.Data    = Custom(poly, 'customdata')
+        self.airscape2       = None
+        self.Notices         = Custom(poly, 'notices')
+        self.Data            = Custom(poly, 'customdata')
         self.Parameters      = Custom(poly, 'customparams')
         self.Notices         = Custom(poly, 'notices')
-        self.TypedParameters = Custom(poly, 'customtypedparams')
-        poly.subscribe(poly.START, self.handler_start, address) 
-        poly.subscribe(poly.POLL, self.handler_poll)
-        poly.subscribe(poly.ADDNODEDONE, self.handler_add_node_done)
-        poly.subscribe(poly.CUSTOMTYPEDPARAMS, self.handler_custom_typed_params)
-        poly.subscribe(poly.LOGLEVEL, self.handler_log_level)
+        self.TypedParameters = Custom(polyglot, 'customtypedparams')
+        self.TypedData       = Custom(polyglot, 'customtypeddata')
+        poly.subscribe(poly.START,                  self.handler_start, address) 
+        poly.subscribe(poly.POLL,                   self.handler_poll)
+        poly.subscribe(poly.ADDNODEDONE,            self.handler_add_node_done)
+        poly.subscribe(self.poly.CUSTOMTYPEDPARAMS, self.handler_typed_params)
+        poly.subscribe(self.poly.CUSTOMTYPEDDATA,   self.handler_typed_data)
+        poly.subscribe(poly.LOGLEVEL,               self.handler_log_level)
         #TODO: Doesn't seem to be implemented yet?
         #poly.addLevelName('Debug + Session Verbose',8)
         #poly.addLevelName('Debug + Session',9)
@@ -91,7 +93,6 @@ class Controller(Node):
         return typedConfig.get(name)
 
     def set_params(self):
-        return
         self.TypedParameters.load( 
             [
                 {
@@ -115,7 +116,13 @@ class Controller(Node):
             ], True)
         self.TypedParams.config = typedParams
 
-    def handler_custom_typed_params(self,flag):
+    def handler_typed_params(self,flag):
+        return
+
+    def handler_typed_data(self,flag):
+        LOGGER.debug('Loading typed data now')
+        self.TypedData.load(params)
+        LOGGER.debug(params)
         return
         self.TypedParameters.load(params)
         self.airscape2 = self.TypedParmameters['airscape2']
