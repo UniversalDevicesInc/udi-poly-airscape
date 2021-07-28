@@ -114,7 +114,6 @@ class Controller(Node):
                     ]
                 },
             ], True)
-        self.TypedParams.config = typedParams
 
     def handler_typed_params(self,flag):
         return
