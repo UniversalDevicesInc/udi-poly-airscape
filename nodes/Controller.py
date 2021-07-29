@@ -52,19 +52,22 @@ class Controller(Node):
                 nodes[node].short_poll()
 
     def long_poll(self):
-        for node in self.nodes:
-            if self.nodes[node].address != self.address and self.nodes[node].do_poll:
-                self.nodes[node].long_poll()
+        nodes = self.poly.getNodes()
+        for node in self:
+            if nodes[node].address != self.address and nodes[node].do_poll:
+                nodes[node].long_poll()
         self.heartbeat()
 
     def query(self):
         self.check_params()
+        nodes = self.poly.getNodes()
         for node in self.nodes:
-            if self.nodes[node].address != self.address:
-                self.nodes[node].query()
+            if nodes[node].address != self.address:
+                nodes[node].query()
         self.reportDrivers()
 
     def discover(self, command):
+        self.airscape2 = self.TypedParmameters['airscape2']
         if self.airscape2 is None or len(self.airscape2) == 0:
             LOGGER.info(f'No Airscape 2 Entries in config: {self.airscape2}')
             return
@@ -122,8 +125,6 @@ class Controller(Node):
         LOGGER.debug('Loading typed data now')
         self.TypedData.load(params)
         LOGGER.debug(params)
-        return
-        self.TypedParameters.load(params)
         self.airscape2 = self.TypedParmameters['airscape2']
         if self.airscape2 is None or len(self.airscape2) == 0:
             self.addNotice('Please add a Airscape 2 Fan in the configuration page','config')
