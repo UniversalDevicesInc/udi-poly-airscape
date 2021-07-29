@@ -129,7 +129,9 @@ class Controller(Node):
         LOGGER.debug(params)
         self.airscape2 = self.TypedParameters['airscape2']
         if self.airscape2 is None or len(self.airscape2) == 0:
-            self.Notices['config'] = 'Please add a Airscape 2 Fan in the configuration page'
+            msg = 'Please add a Airscape 2 Fan in the configuration page'
+            LOGGER.warning(msg)
+            self.Notices['config'] = msg
 
     def handler_log_level(self,level):
         LOGGER.debug(f'level=level')
