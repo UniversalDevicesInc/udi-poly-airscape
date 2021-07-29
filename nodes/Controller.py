@@ -34,6 +34,7 @@ class Controller(Node):
         self.Notices.clear()
         self.heartbeat()
         self.set_params()
+        LOGGER.debug(f'{self.TypedParameters}')
         self.discover("")
 
     def handler_add_node_done(self, node):
