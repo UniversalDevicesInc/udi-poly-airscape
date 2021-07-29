@@ -34,7 +34,6 @@ class Controller(Node):
         self.Notices.clear()
         self.heartbeat()
         self.set_params()
-        LOGGER.debug(f'{self.TypedParameters}')
         self.discover("")
 
     def handler_add_node_done(self, node):
@@ -68,7 +67,6 @@ class Controller(Node):
         self.reportDrivers()
 
     def discover(self, command):
-        self.airscape2 = self.TypedParameters['airscape2']
         if self.airscape2 is None or len(self.airscape2) == 0:
             LOGGER.info(f'No Airscape 2 Entries in config: {self.airscape2}')
             return
@@ -128,7 +126,7 @@ class Controller(Node):
         self.Notices.clear()
         self.TypedData.load(params)
         LOGGER.debug(params)
-        self.airscape2 = self.TypedParameters['airscape2']
+        self.airscape2 = self.TypedData['airscape2']
         if self.airscape2 is None or len(self.airscape2) == 0:
             msg = 'Please add a Airscape 2 Fan in the configuration page'
             LOGGER.warning(msg)
