@@ -67,7 +67,7 @@ class Controller(Node):
         self.reportDrivers()
 
     def discover(self, command):
-        self.airscape2 = self.TypedParmameters['airscape2']
+        self.airscape2 = self.TypedParameters['airscape2']
         if self.airscape2 is None or len(self.airscape2) == 0:
             LOGGER.info(f'No Airscape 2 Entries in config: {self.airscape2}')
             return
