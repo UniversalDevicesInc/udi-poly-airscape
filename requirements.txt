@@ -1,3 +1,3 @@
-udi_interface>=3.0.7
+udi_interface>=3.0.8
 requests
 xmltodict
