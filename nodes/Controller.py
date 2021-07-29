@@ -126,7 +126,7 @@ class Controller(Node):
         LOGGER.debug('Loading typed data now')
         self.TypedData.load(params)
         LOGGER.debug(params)
-        self.airscape2 = self.TypedParmameters['airscape2']
+        self.airscape2 = self.TypedParameters['airscape2']
         if self.airscape2 is None or len(self.airscape2) == 0:
             self.addNotice('Please add a Airscape 2 Fan in the configuration page','config')
 
