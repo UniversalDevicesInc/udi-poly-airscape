@@ -24,14 +24,14 @@ class Airscape2(Node):
 
     def start(self):
         self.setDriver('GV1', 0)
-        self.l_info('start', 'config={}'.format(self.config_data))
+        LOGGER.info(f'config={self.config_data}')
         self.host = self.config_data['host']
         self.session = pgSession(self,self.name,LOGGER,self.host,debug_level=self.debug_level)
         self.query()
         self.do_poll = True
 
     def shortPoll(self):
-        self.l_debug('shortPoll', '...')
+        LOGGER.debug('...')
         if not self.watching_door:
             self.poll()
 
@@ -45,7 +45,7 @@ class Airscape2(Node):
     def wait_for_response(self):
         # Poll until we have a status
         while not (self.st):
-            self.l_debug("wait_for_response","")
+            LOGGER.debug("...")
             self.poll()
             time.sleep(1)
 
@@ -69,7 +69,7 @@ class Airscape2(Node):
         'oa': 'oa_temp'
     }
     def set_from_response(self,res):
-        self.l_debug('set_from_response',"In: {}".format(res))
+        LOGGER.debug(f'In: {res}')
         self.st = self.check_response(res)
         self.setDriver('GV1',1 if self.st else 0)
         if self.st:
@@ -88,29 +88,29 @@ class Airscape2(Node):
             # Wait for the door if we are not watching it already
             if not self.watching_door:
                 self.watch_door()
-        self.l_debug('set_from_response',"Out: {}".format(self.status))
+        LOGGER.debug(f'Out: {self.status}')
 
     def check_response(self,res):
         if res is not False and 'code' in res and res['code'] == 200:
             if 'data' in res and res['data'] is not False:
                 return True
             else:
-                self.l_error('check_response', 'Got good code: {}'.format(res))
+                LOGGER.error(f'Got good code: {res}')
         return False
 
     def watch_door(self):
         cnt = 0
         while int(self.status['doorinprocess']) == 1:
             if cnt > 60:
-                self.l_error('watch_door', 'Timeout waiting for door to open?')
+                LOGGER.error('Timeout waiting for door to open?')
                 break
             self.watching_door = True
-            self.l_debug('watch_door', 'st={}'.format(self.status['doorinprocess']))
+            LOGGER.debug(f'st={self.status['doorinprocess']}')
             time.sleep(1)
             cnt += 1
             self.poll()
         self.watching_door = False
-        self.l_debug('watch_door', 'st={}'.format(self.status['doorinprocess']))
+        LOGGER.debug(f'st={status['doorinprocess']}')
 
     def query(self):
         self.poll()
@@ -128,7 +128,7 @@ class Airscape2(Node):
 
     def setOnI(self, command):
         val = command.get('value')
-        self.l_info('setOn','val={}'.format(val))
+        LOGGER.info(f'val={val}')
         if val is None:
             speed = 5 # Medium
         else:
@@ -146,13 +146,13 @@ class Airscape2(Node):
                 # Insteon Medium
                 speed = 3
             elif val > 10:
-                self.l_error('setOn','Illegal value {}'.format(val))
+                LOGGER.error(f'Illegal value {val}')
                 return
         self.setSpeed(speed)
 
     def setOnZW(self, command):
         val = command.get('value')
-        self.l_info('setOn','val={}'.format(val))
+        LOGGER.info(f'val={val}')
         if val is None:
             speed = 4
         else:
@@ -193,19 +193,19 @@ class Airscape2(Node):
         self.setSpeed(speed)
 
     def setOff(self, command):
-        self.l_info('setOff','')
+        LOGGER.info('')
         # The data returned by fanspd is not good xml
         res = self.session.get('fanspd.cgi',{'dir': 4},parse="axml")
         self.set_from_response(res)
 
     def speedDown(self, command):
-        self.l_info('speedDown','')
+        LOGGER.info('')
         # The data returned by fanspd is not good xml
         res = self.session.get('fanspd.cgi',{'dir': 3},parse="axml")
         self.set_from_response(res)
 
     def speedUp(self, command):
-        self.l_info('speedUp','')
+        LOGGER.info('')
         # The data returned by fanspd is not good xml
         res = self.session.get('fanspd.cgi',{'dir': 1},parse="axml")
         self.set_from_response(res)
@@ -216,9 +216,9 @@ class Airscape2(Node):
         self.set_from_response(res)
 
     def setSpeed(self,val):
-        self.l_info('setSpeed','{}'.format(val))
+        LOGGER.info(f'val={val}')
         if not self.do_poll:
-            self.l_debug('setSpeed', 'waiting for startup to complete')
+            LOGGER.debug('waiting for startup to complete')
             while not self.do_poll:
                 time.sleep(1)
         if val == 0:
@@ -227,28 +227,16 @@ class Airscape2(Node):
             self.wait_for_response()
             if 'fanspd' in self.status:
                 while val > int(self.status['fanspd']):
-                    self.l_info("_setSpeed","current={} request={}".format(int(self.status['fanspd']),val))
+                    LOGGER.info(f'current={int(self.status['fanspd'])} request={val}'')
                     self.speedUp({})
                     time.sleep(1)
                 while val < int(self.status['fanspd']):
-                    self.l_info("_setSpeed","current={} request={}".format(int(self.status['fanspd']),val))
+                    LOGGER.info(f'current={int(self.status['fanspd'])} request={val}'')
                     self.speedDown({})
                     time.sleep(1)
-                self.l_info("_setSpeed","current={} request={}".format(int(self.status['fanspd']),val))
+                LOGGER.info(f'current={int(self.status['fanspd'])} request={val}'')
             else:
-                self.l_error('setSpeed', 'Called before we know the current fanspd, that should not be possible')
-
-    def l_info(self, name, string):
-        LOGGER.info("%s:%s:%s: %s" %  (self.id,self.name,name,string))
-
-    def l_error(self, name, string):
-        LOGGER.error("%s:%s:%s: %s" % (self.id,self.name,name,string))
-
-    def l_warning(self, name, string):
-        LOGGER.warning("%s:%s:%s: %s" % (self.id,self.name,name,string))
-
-    def l_debug(self, name, string):
-        LOGGER.debug("%s:%s:%s: %s" % (self.id,self.name,name,string))
+                LOGGER.error('Called before we know the current fanspd, that should not be possible')
 
     drivers = [
         {'driver': 'ST',  'value': 0, 'uom': 25}, # speed

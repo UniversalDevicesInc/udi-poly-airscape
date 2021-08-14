@@ -53,7 +53,7 @@ class Controller(Node):
 
     def long_poll(self):
         nodes = self.poly.getNodes()
-        for node in self:
+        for node in nodes:
             if nodes[node].address != self.address and nodes[node].do_poll:
                 nodes[node].long_poll()
         self.heartbeat()
@@ -74,13 +74,13 @@ class Controller(Node):
             self.poly.addNode(Airscape2(self, self.address, get_valid_node_name(a2['name']), 'Airscape {}'.format(a2['name']), a2))
 
     def delete(self):
-        LOGGER.info('Oh God I\'m being deleted. Nooooooooooooooooooooooooooooooooooooooooo.')
+        LOGGER.info('I am being deleted...')
 
     def stop(self):
         LOGGER.debug('NodeServer stopped.')
 
     def heartbeat(self):
-        LOGGER.debug('heartbeat hb={}'.format(self.hb))
+        LOGGER.debug(f'heartbeat hb={self.hb}')
         if self.hb == 0:
             self.reportCmd("DON",2)
             self.hb = 1
@@ -118,11 +118,11 @@ class Controller(Node):
             ], True)
 
     def handler_typed_params(self,params):
-        LOGGER.debug('Loading typed params now {params}')
+        LOGGER.debug(f'Loading typed params now {params}')
         return
 
     def handler_typed_data(self,params):
-        LOGGER.debug('Loading typed data now {params}')
+        LOGGER.debug(f'Loading typed data now {params}')
         self.Notices.clear()
         self.TypedData.load(params)
         LOGGER.debug(params)
@@ -172,8 +172,8 @@ class Controller(Node):
         elif level <= 50:
             self.set_all_logs(logging.CRITICAL)
         else:
-            self.l_error("set_debug_mode","Unknown level {0}".format(level))
-        self.l_info("set_debug_mode"," session debug_level={}".format(self.debug_level))
+            LOGGER.error(f'Unknown level {level}')
+        LOGGER.info(f'session debug_level={self.debug_level}')
 
     id = 'controller'
     commands = {
