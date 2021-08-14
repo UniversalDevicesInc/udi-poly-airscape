@@ -105,12 +105,12 @@ class Airscape2(Node):
                 LOGGER.error('Timeout waiting for door to open?')
                 break
             self.watching_door = True
-            LOGGER.debug(f'st={self.status['doorinprocess']}')
+            LOGGER.debug(f"st={self.status['doorinprocess']}")
             time.sleep(1)
             cnt += 1
             self.poll()
         self.watching_door = False
-        LOGGER.debug(f'st={status['doorinprocess']}')
+        LOGGER.debug(f"st={status['doorinprocess']}")
 
     def query(self):
         self.poll()
@@ -227,14 +227,14 @@ class Airscape2(Node):
             self.wait_for_response()
             if 'fanspd' in self.status:
                 while val > int(self.status['fanspd']):
-                    LOGGER.info(f'current={int(self.status['fanspd'])} request={val}'')
+                    LOGGER.info(f"current={int(self.status['fanspd'])} request={val}")
                     self.speedUp({})
                     time.sleep(1)
                 while val < int(self.status['fanspd']):
-                    LOGGER.info(f'current={int(self.status['fanspd'])} request={val}'')
+                    LOGGER.info(f"current={int(self.status['fanspd'])} request={val}")
                     self.speedDown({})
                     time.sleep(1)
-                LOGGER.info(f'current={int(self.status['fanspd'])} request={val}'')
+                LOGGER.info(f"current={int(self.status['fanspd'])} request={val}")
             else:
                 LOGGER.error('Called before we know the current fanspd, that should not be possible')
 
