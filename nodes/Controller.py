@@ -72,12 +72,6 @@ class Controller(Node):
             self.reportCmd("DOF",2)
             self.hb = 0
 
-    def get_typed_name(self,name):
-        typedConfig = self.polyConfig.get('typedCustomData')
-        if not typedConfig:
-            return None
-        return typedConfig.get(name)
-
     def set_params(self):
         self.TypedParameters.load( 
             [
