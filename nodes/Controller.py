@@ -23,8 +23,8 @@ class Controller(Node):
         poly.subscribe(self.poly.CUSTOMTYPEDDATA,   self.handler_typed_data)
         poly.subscribe(poly.LOGLEVEL,               self.handler_log_level)
         #TODO: Doesn't seem to be implemented yet?
-        #poly.addLevelName('Debug + Session Verbose',8)
-        #poly.addLevelName('Debug + Session',9)
+        logging.addLevelName(8,'Debug + Session Verbose')
+        logging.addLevelName(9,'Debug + Session')
         poly.ready()
         poly.addNode(self)
 
