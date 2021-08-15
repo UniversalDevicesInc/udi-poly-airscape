@@ -45,7 +45,7 @@ class Controller(Node):
     def query(self):
         self.check_params()
         nodes = self.poly.getNodes()
-        for node in self.nodes:
+        for node in nodes:
             if nodes[node].address != self.address:
                 nodes[node].query()
         self.reportDrivers()
