@@ -1,5 +1,5 @@
 
-from udi_interface import Node,LOGGER,Custom
+from udi_interface import Node,LOGGER,Custom,LOG_HANDLER
 import logging
 from copy import deepcopy
 from nodes import Airscape2
@@ -120,14 +120,9 @@ class Controller(Node):
         LOGGER.info(f'level={level_name}')
         rh = {'DEBUG': logging.DEBUG, 'INFO': logging.INFO, 'WARNING': logging.WARNING, 'ERROR': logging.ERROR}
         level=rh[level_name]
-        if level >= 10:
-            slevel = logging.WARNING
-        else:
-            # They want to see full debugging of modules.
-            slevel = logging.DEBUG
-        LOGGER.info(f'slevel={slevel}')
-        logging.getLogger('requests').setLevel(logging.WARNING)
-        logging.getLogger('urllib3').setLevel(logging.WARNING)
+        if level < 10:
+            LOGGER.info("Setting basic config to DEBUG...")
+            LOG_HANDLER.set_basic_config(True,logging.DEBUG)
 
     id = 'controller'
     commands = {
