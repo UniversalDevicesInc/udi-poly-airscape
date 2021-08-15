@@ -34,8 +34,10 @@ The Forum for discussing this nodeserver is [UDI Forum Polyglot V2 Airscape Node
 
 ## Release Notes
 
-- 3.x.x: TBD
-  - Covnert to PG3
+- 3.0.1: 08/15/2021
+  - Setting debug modes working, but need https://github.com/UniversalDevicesInc/pg3/issues/60 fixed before Debug+Session mode works.
+- 3.0.0: 08/15/2021
+  - Initial release of PG3 conversion
 - 2.1.0: 06/20/2021
   - Better fix for [Don't upload profile on every restart, add version checking](https://github.com/jimboca/udi-poly-airscape/issues/2)
   - Changes to support GH and Alexa, add it as a Fan.  Looks like a 5 speed fan, that's the best we have for now.

@@ -23,7 +23,6 @@ class Controller(Node):
         poly.subscribe(self.poly.CUSTOMTYPEDDATA,   self.handler_typed_data)
         poly.subscribe(poly.LOGLEVEL,               self.handler_log_level)
         #TODO: Doesn't seem to be implemented yet?
-        logging.addLevelName(8,'Debug + Session Verbose')
         logging.addLevelName(9,'Debug + Session')
         poly.ready()
         poly.addNode(self)
@@ -117,11 +116,18 @@ class Controller(Node):
             LOGGER.warning(msg)
             self.Notices['config'] = msg
 
-    def handler_log_level(self,level):
-        LOGGER.debug(f'level=level')
-        #LOGGER.setLevel(level)
-        #logging.getLogger('requests').setLevel(level)
-        #logging.getLogger('urllib3').setLevel(level)
+    def handler_log_level(self,level_name):
+        LOGGER.info(f'level={level_name}')
+        rh = {'DEBUG': logging.DEBUG, 'INFO': logging.INFO, 'WARNING': logging.WARNING, 'ERROR': logging.ERROR}
+        level=rh[level_name]
+        if level >= 10:
+            slevel = logging.WARNING
+        else:
+            # They want to see full debugging of modules.
+            slevel = logging.DEBUG
+        LOGGER.info(f'slevel={slevel}')
+        logging.getLogger('requests').setLevel(logging.WARNING)
+        logging.getLogger('urllib3').setLevel(logging.WARNING)
 
     # TODO: Add levels 8 & 9 to config
     def set_debug_mode(self,level=None):
