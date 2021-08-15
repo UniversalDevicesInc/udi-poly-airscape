@@ -40,23 +40,8 @@ class Controller(Node):
         LOGGER.debug(f'node added {node}')
 
     def handler_poll(self, polltype):
-        if polltype == 'shortPoll':
-            self.short_poll()
-        else:
-            self.long_poll()
-
-    def short_poll(self):
-        nodes = self.poly.getNodes()
-        for node in nodes:
-            if nodes[node].address != self.address and nodes[node].do_poll:
-                nodes[node].short_poll()
-
-    def long_poll(self):
-        nodes = self.poly.getNodes()
-        for node in nodes:
-            if nodes[node].address != self.address and nodes[node].do_poll:
-                nodes[node].long_poll()
-        self.heartbeat()
+        if polltype == 'longPoll':
+            self.heartbeat()
 
     def query(self):
         self.check_params()

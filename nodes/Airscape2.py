@@ -13,16 +13,16 @@ from pgSession import pgSession
 class Airscape2(Node):
 
     def __init__(self, controller, primary, address, name, config_data):
-        super(Airscape2, self).__init__(controller, primary, address, name)
+        super(Airscape2, self).__init__(controller.poly, primary, address, name)
         self.config_data = config_data
         self.debug_level = 1
-        # TODO: Subscribe to let short poll heppen and remove call from controller node
-        self.do_poll = False # Don't let shortPoll happen during initialiation
         self.watching_door = False
         self.status = {}
         self.driver = {}
+        controller.poly.subscribe(controller.poly.START,                  self.handler_start, address) 
+        controller.poly.subscribe(controller.poly.POLL,                   self.handler_poll)
 
-    def start(self):
+    def handler_start(self):
         self.setDriver('GV1', 0)
         LOGGER.info(f'config={self.config_data}')
         self.host = self.config_data['host']
@@ -30,12 +30,18 @@ class Airscape2(Node):
         self.query()
         self.do_poll = True
 
-    def shortPoll(self):
+    def handler_poll(self, polltype):
+        if polltype == 'shortPoll':
+            self.short_poll()
+        else:
+            self.long_poll()
+
+    def short_poll(self):
         LOGGER.debug('...')
         if not self.watching_door:
             self.poll()
 
-    def longPoll(self):
+    def long_poll(self):
         pass
 
     def poll(self):
@@ -110,21 +116,11 @@ class Airscape2(Node):
             cnt += 1
             self.poll()
         self.watching_door = False
-        LOGGER.debug(f"st={status['doorinprocess']}")
+        LOGGER.debug(f"st={self.status['doorinprocess']}")
 
     def query(self):
         self.poll()
         self.reportDrivers()
-
-    def setDriver(self,driver,value):
-        self.driver[driver] = value
-        super(Airscape2, self).setDriver(driver,value)
-
-    def getDriver(self,driver):
-        if driver in self.driver:
-            return self.driver[driver]
-        else:
-            return super(Airscape2, self).getDriver(driver)
 
     def setOnI(self, command):
         val = command.get('value')
