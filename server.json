@@ -14,7 +14,7 @@
         {
             "title": "airscape: A UDI Polyglot V3 NodeServer for Airscape Fan Integration",
             "author": "JimBoCA",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "date": "August 14, 2021",
             "source": "https://github.com/UniversalDevicesInc/udi-poly-airscape",
             "license": "https://raw.githubusercontent.com/UniversalDevicesInc/udi-poly-airscape/master/LICENSE"
