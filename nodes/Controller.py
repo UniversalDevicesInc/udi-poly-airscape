@@ -23,7 +23,22 @@ class Controller(Node):
         poly.subscribe(self.poly.CUSTOMTYPEDDATA,   self.handler_typed_data)
         poly.subscribe(poly.LOGLEVEL,               self.handler_log_level)
         #TODO: Doesn't seem to be implemented yet?
-        logging.addLevelName(9,'Debug + Session')
+        logging.addLevelName(9,'DEBUG_SESSION')
+        poly.setLogList([
+            {"Debug+Session":"DEBUG_SESSION"},
+            {"Debug":"DEBUG"},
+            {"Info":"INFO"},
+            {"Warning":"WARNING"},
+            {"Error":"ERROR"},
+            ])
+        # for future?
+#        poly.setLogList(
+#            {'name':'Debug + Session', 'level_name':'DEBUG+SESSION', 'value':9},
+#            {'name':'Debug',           'level_name':'DEBUG',         'value':10},
+#            {'name':'Info',            'level_name':'INFO',          'value':20},
+#            {'name':'Warning',         'level_name':'WARNING',       'value':30},
+#            {'name':'Error',           'level_name':'ERROR',         'value':40},
+#        )
         poly.ready()
         poly.addNode(self)
 
@@ -43,7 +58,6 @@ class Controller(Node):
             self.heartbeat()
 
     def query(self):
-        self.check_params()
         nodes = self.poly.getNodes()
         for node in nodes:
             if nodes[node].address != self.address:
@@ -112,11 +126,14 @@ class Controller(Node):
 
     def handler_log_level(self,level_name):
         LOGGER.info(f'level={level_name}')
-        rh = {'DEBUG': logging.DEBUG, 'INFO': logging.INFO, 'WARNING': logging.WARNING, 'ERROR': logging.ERROR}
+        rh = {'DEBUG_SESSION': 9, 'DEBUG': logging.DEBUG, 'INFO': logging.INFO, 'WARNING': logging.WARNING, 'ERROR': logging.ERROR}
         level=rh[level_name]
         if level < 10:
             LOGGER.info("Setting basic config to DEBUG...")
             LOG_HANDLER.set_basic_config(True,logging.DEBUG)
+        else:
+            LOGGER.info("Setting basic config to WARNING...")
+            LOG_HANDLER.set_basic_config(True,logging.WARNING)
 
     id = 'controller'
     commands = {

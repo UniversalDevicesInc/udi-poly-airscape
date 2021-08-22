@@ -34,6 +34,9 @@ The Forum for discussing this nodeserver is [UDI Forum Polyglot V2 Airscape Node
 
 ## Release Notes
 
+- 3.0.2: 08/26/2021
+  - Log levels fixed
+  - Fix crash on query
 - 3.0.1: 08/15/2021
   - Setting debug modes working, but need https://github.com/UniversalDevicesInc/pg3/issues/60 fixed before Debug+Session mode works.
 - 3.0.0: 08/15/2021
