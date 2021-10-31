@@ -22,23 +22,7 @@ class Controller(Node):
         poly.subscribe(self.poly.CUSTOMTYPEDPARAMS, self.handler_typed_params)
         poly.subscribe(self.poly.CUSTOMTYPEDDATA,   self.handler_typed_data)
         poly.subscribe(poly.LOGLEVEL,               self.handler_log_level)
-        #TODO: Doesn't seem to be implemented yet?
-        logging.addLevelName(9,'DEBUG_SESSION')
-        poly.setLogList([
-            {"Debug+Session":"DEBUG_SESSION"},
-            {"Debug":"DEBUG"},
-            {"Info":"INFO"},
-            {"Warning":"WARNING"},
-            {"Error":"ERROR"},
-            ])
-        # for future?
-#        poly.setLogList(
-#            {'name':'Debug + Session', 'level_name':'DEBUG+SESSION', 'value':9},
-#            {'name':'Debug',           'level_name':'DEBUG',         'value':10},
-#            {'name':'Info',            'level_name':'INFO',          'value':20},
-#            {'name':'Warning',         'level_name':'WARNING',       'value':30},
-#            {'name':'Error',           'level_name':'ERROR',         'value':40},
-#        )
+        poly.addLogLevel('DEBUG_MODULES',9,'Debug + Modules')
         poly.ready()
         poly.addNode(self)
 
@@ -124,11 +108,18 @@ class Controller(Node):
             LOGGER.warning(msg)
             self.Notices['config'] = msg
 
-    def handler_log_level(self,level_name):
-        LOGGER.info(f'level={level_name}')
-        rh = {'DEBUG_SESSION': 9, 'DEBUG': logging.DEBUG, 'INFO': logging.INFO, 'WARNING': logging.WARNING, 'ERROR': logging.ERROR}
-        level=rh[level_name]
-        if level < 10:
+    def handler_log_level(self,level):
+        LOGGER.info(f'level={level}')
+        if level['level'] < 10:
+            LOGGER.info("Setting basic config to DEBUG...")
+            LOG_HANDLER.set_basic_config(True,logging.DEBUG)
+        else:
+            LOGGER.info("Setting basic config to WARNING...")
+            LOG_HANDLER.set_basic_config(True,logging.WARNING)
+            
+    def handler_log_level(self,level):
+        LOGGER.info(f'level={level}')
+        if level['level'] < 10:
             LOGGER.info("Setting basic config to DEBUG...")
             LOG_HANDLER.set_basic_config(True,logging.DEBUG)
         else:
