@@ -19,10 +19,10 @@ class Controller(Node):
         poly.subscribe(poly.START,                  self.handler_start, address) 
         poly.subscribe(poly.POLL,                   self.handler_poll)
         poly.subscribe(poly.ADDNODEDONE,            self.handler_add_node_done)
-        poly.subscribe(self.poly.CUSTOMTYPEDPARAMS, self.handler_typed_params)
-        poly.subscribe(self.poly.CUSTOMTYPEDDATA,   self.handler_typed_data)
+        poly.subscribe(poly.CUSTOMTYPEDPARAMS, self.handler_typed_params)
+        poly.subscribe(poly.CUSTOMTYPEDDATA,   self.handler_typed_data)
+        poly.subscribe(poly.CONFIGDONE,        self.handler_config_done)
         poly.subscribe(poly.LOGLEVEL,               self.handler_log_level)
-        poly.addLogLevel('DEBUG_MODULES',9,'Debug + Modules')
         poly.ready()
         poly.addNode(self)
 
@@ -33,6 +33,11 @@ class Controller(Node):
         self.heartbeat()
         self.set_params()
         self.discover("")
+
+    def handler_config_done(self,data):
+        LOGGER.debug(f'enter: data={data}')
+        self.poly.addLogLevel('DEBUG_MODULES',9,'Debug + Modules')
+        LOGGER.debug(f'exit')
 
     def handler_add_node_done(self, node):
         LOGGER.debug(f'node added {node}')
@@ -116,7 +121,7 @@ class Controller(Node):
         else:
             LOGGER.info("Setting basic config to WARNING...")
             LOG_HANDLER.set_basic_config(True,logging.WARNING)
-            
+
     def handler_log_level(self,level):
         LOGGER.info(f'level={level}')
         if level['level'] < 10:

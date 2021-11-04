@@ -34,6 +34,8 @@ The Forum for discussing this nodeserver is [UDI Forum Polyglot V2 Airscape Node
 
 ## Release Notes
 
+- 3.0.4: 11/03/2021
+  - Log levels all working with new methods
 - 3.0.2: 08/26/2021
   - Log levels fixed
   - Fix crash on query
