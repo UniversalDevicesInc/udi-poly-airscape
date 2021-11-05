@@ -19,9 +19,9 @@ class Controller(Node):
         poly.subscribe(poly.START,                  self.handler_start, address) 
         poly.subscribe(poly.POLL,                   self.handler_poll)
         poly.subscribe(poly.ADDNODEDONE,            self.handler_add_node_done)
-        poly.subscribe(poly.CUSTOMTYPEDPARAMS, self.handler_typed_params)
-        poly.subscribe(poly.CUSTOMTYPEDDATA,   self.handler_typed_data)
-        poly.subscribe(poly.CONFIGDONE,        self.handler_config_done)
+        poly.subscribe(poly.CUSTOMTYPEDPARAMS,      self.handler_typed_params)
+        poly.subscribe(poly.CUSTOMTYPEDDATA,        self.handler_typed_data)
+        poly.subscribe(poly.CONFIGDONE,             self.handler_config_done)
         poly.subscribe(poly.LOGLEVEL,               self.handler_log_level)
         poly.ready()
         poly.addNode(self)
@@ -34,8 +34,8 @@ class Controller(Node):
         self.set_params()
         self.discover("")
 
-    def handler_config_done(self,data):
-        LOGGER.debug(f'enter: data={data}')
+    def handler_config_done(self):
+        LOGGER.debug(f'enter:')
         self.poly.addLogLevel('DEBUG_MODULES',9,'Debug + Modules')
         LOGGER.debug(f'exit')
 
