@@ -24,7 +24,7 @@ class Controller(Node):
         poly.subscribe(poly.CONFIGDONE,             self.handler_config_done)
         poly.subscribe(poly.LOGLEVEL,               self.handler_log_level)
         poly.ready()
-        poly.addNode(self)
+        self.poly.addNode(self, conn_status='ST')
 
     def handler_start(self):
         #serverdata = self.poly._get_server_data()
@@ -43,6 +43,7 @@ class Controller(Node):
         LOGGER.debug(f'node added {node}')
 
     def handler_poll(self, polltype):
+        LOGGER.debug(f'polltype:{polltype}')
         if polltype == 'longPoll':
             self.heartbeat()
 
@@ -137,5 +138,5 @@ class Controller(Node):
         'DISCOVER': discover,
     }
     drivers = [
-        {'driver': 'ST', 'value': 1, 'uom': 2},
+        {'driver': 'ST', 'value': 1, 'uom': 25},
     ]

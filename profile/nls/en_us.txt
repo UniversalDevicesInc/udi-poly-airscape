@@ -7,6 +7,11 @@ CMD-ctl-DEBUG-NAME = Set Debug Level
 ST-ctl-ST-NAME = NodeServer Online
 ST-ctl-GV1-NAME = Debug Level
 
+# Controller Status
+CST-0 = Disconnected
+CST-1 = Connected
+CST-2 = Failed
+
 CDM-8 = Debug + Session Verbose
 CDM-9 = Debug + Session
 CDM-10 = Debug

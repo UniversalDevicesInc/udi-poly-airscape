@@ -33,7 +33,9 @@ The Forum for discussing this nodeserver is [UDI Forum Polyglot V2 Airscape Node
 [Git Hub Issue Tracker](https://github.com/UniversalDevicesInc/udi-poly-airscape/issues)
 
 ## Release Notes
-
+- 3.0.6: 12/26/2021
+  - Added conn_status to Controller so ST is properly set
+    - Existing users will need to delete the controller node in the Polyglot UI and restart the NS
 - 3.0.5: 11/05/2021
   - Works with udi_interface 3.0.22
 - 3.0.4: 11/03/2021
