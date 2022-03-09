@@ -64,9 +64,6 @@ class Controller(Node):
     def delete(self):
         LOGGER.info('I am being deleted...')
 
-    def stop(self):
-        LOGGER.debug('NodeServer stopped.')
-
     def heartbeat(self):
         LOGGER.debug(f'heartbeat hb={self.hb}')
         if self.hb == 0:
