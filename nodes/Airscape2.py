@@ -17,6 +17,7 @@ class Airscape2(Node):
         self.config_data = config_data
         self.debug_level = 1
         self.watching_door = False
+        self.session = None
         self.status = {}
         self.driver = {}
         controller.poly.subscribe(controller.poly.START,                  self.handler_start, address) 
@@ -31,6 +32,9 @@ class Airscape2(Node):
         self.do_poll = True
 
     def handler_poll(self, polltype):
+        if self.session is None:
+            LOGGER.warning(f"handler_poll: No session created yet")
+            return
         if polltype == 'shortPoll':
             self.short_poll()
         else:
