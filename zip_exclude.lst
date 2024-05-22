@@ -4,3 +4,7 @@ logs/*
 *.pyc
 zip_exclude.lst
 Airscape.zip
+*.cert
+*.key
+*.pid
+*.log
